@@ -50,43 +50,51 @@ The **Student Attendance Portal** is a web-based application designed to streaml
    cd student-attendance-portal
    ```
 
-2. Install dependencies for both backend and frontend:
+2. Install dependencies for both back-end and front-end:
 
-   ```bash
-   cd backend
-   npm install
+  ```powershell
+  cd back-end
+  npm install
 
-   cd ../frontend
-   npm install
-   ```
+  cd ..\front-end
+  npm install
+  ```
 
-3. Create a `.env` file in the backend with the following:
+3. Create a `.env` file in the `back-end` folder with the following keys (example values):
 
-   ```env
-   PORT=5000
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_secret_key
-   ```
+  ```text
+  PORT=5000
+  HOST_URL=127.0.0.1
+  MONGO_URI=your_mongodb_connection_string
+  JWT_SECRET=your_secret_key
+  SMTP_USER=your_smtp_user
+  SMTP_PASS=your_smtp_password
+  VITE_REACT_APP=http://localhost:5173
+  ```
 
-4. Run the backend:
+  Notes:
+  - The server also accepts `MONGODB_URI` or even the misspelled `MONGIDB_URI` as fallbacks.
+  - `VITE_REACT_APP` is used to allow the frontend origin; set it to the front-end dev URL.
 
-   ```bash
-   cd backend
-   npm run dev
-   ```
+4. Run the backend (from repository root):
 
-5. Run the frontend:
+  ```powershell
+  cd back-end
+  npm run dev
+  ```
 
-   ```bash
-   cd frontend
-   npm start
-   ```
+5. Run the front-end (in a separate terminal):
+
+  ```powershell
+  cd front-end
+  npm run dev
+  ```
 
 6. Open the app in your browser at:
 
-   ```
-   http://localhost:3000
-   ```
+  ```
+  http://localhost:5173
+  ```
 
 ---
 
