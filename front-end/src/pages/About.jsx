@@ -1,262 +1,61 @@
 function About() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-purple-50">
-      {/* Hero Section */}
-      <section className="py-20 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6">
-            About EduPortal
-          </h1>
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Revolutionizing education through innovative technology. We're committed to making
-            attendance management seamless, efficient, and insightful for modern educational institutions.
-          </p>
-        </div>
-      </section>
-
-      {/* Mission & Vision */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Mission */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-purple-100">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-6">
-                <i className="fas fa-bullseye text-2xl text-white"></i>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To empower educational institutions with cutting-edge technology that simplifies attendance management,
-                enhances student engagement, and provides actionable insights for academic success.
-              </p>
-            </div>
-
-            {/* Vision */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-purple-100">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-6">
-                <i className="fas fa-eye text-2xl text-white"></i>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To be the leading platform for educational technology, setting new standards for attendance management
-                and student success tracking worldwide.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-purple-600 to-indigo-600">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="text-white">
-              <div className="text-4xl font-bold mb-2">10K+</div>
-              <div className="text-purple-100">Students</div>
-            </div>
-            <div className="text-white">
-              <div className="text-4xl font-bold mb-2">500+</div>
-              <div className="text-purple-100">Professors</div>
-            </div>
-            <div className="text-white">
-              <div className="text-4xl font-bold mb-2">50+</div>
-              <div className="text-purple-100">Institutions</div>
-            </div>
-            <div className="text-white">
-              <div className="text-4xl font-bold mb-2">99.9%</div>
-              <div className="text-purple-100">Uptime</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-20 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-gray-800 mb-6">Meet Our Team</h2>
-          <p className="text-xl text-gray-600 mb-12">
-            Passionate educators and technologists working together to transform education
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {/* Team Member 1 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-code text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Heshan Sandeepana</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Dedicated team member contributing to project development.
-              </p>
-            </div>
-
-            {/* Team Member 2 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-laptop-code text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Sanjaya Samudra</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Focused on technical implementation and development.
-              </p>
-            </div>
-
-            {/* Team Member 3 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-database text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Saranga Samarakoon</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Handling data management and backend systems.
-              </p>
-            </div>
-
-            {/* Team Member 4 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-mobile-alt text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Praveen Tharuka</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Working on mobile and responsive design solutions.
-              </p>
-            </div>
-
-            {/* Team Member 5 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-cogs text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Dulneth Ranaweera</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Focused on system configuration and optimization.
-              </p>
-            </div>
-
-            {/* Team Member 6 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-palette text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Ramla Muhajireen</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Contributing to UI/UX design and user experience.
-              </p>
-            </div>
-
-            {/* Team Member 7 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-network-wired text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Malith Dilshan</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Working on network integration and connectivity.
-              </p>
-            </div>
-
-            {/* Team Member 8 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-chart-line text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Sithara Gunasekara</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Analyzing data and creating insightful reports.
-              </p>
-            </div>
-
-            {/* Team Member 9 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-search text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Nimesha Ranasinghe</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Research and quality assurance specialist.
-              </p>
-            </div>
-
-            {/* Team Member 10 */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-100">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-tools text-2xl text-white"></i>
-              </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Rasindu Dissanayake</h3>
-              <p className="text-purple-600 font-medium text-sm mb-3">Team Member</p>
-              <p className="text-gray-600 text-xs leading-relaxed">
-                Technical support and maintenance specialist.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6">Our Core Values</h2>
-            <p className="text-xl text-gray-600">
-              The principles that guide everything we do
+    <div className="min-h-screen bg-gray-50 text-slate-900">
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <img src="/brand/university logo.png" alt="University logo" className="w-36 h-36 object-contain rounded-lg bg-white p-3 shadow" onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src='/user.jpg'}} />
+          <div>
+            <h1 className="text-3xl font-bold text-[#002147]">About the Faculty of Computing</h1>
+            <p className="mt-2 text-gray-600">University of Sri Jayewardenepura</p>
+            <p className="mt-4 text-gray-700 leading-relaxed">
+              The Faculty of Computing at the University of Sri Jayewardenepura provides modern computing education and research
+              tailored to national and global needs. The Faculty focuses on producing graduates skilled in software engineering,
+              knowledge engineering, information systems, and scientific computing to support industry and research sectors.
             </p>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Value 1 */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-lightbulb text-2xl text-white"></i>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Innovation</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Constantly pushing boundaries to create better educational experiences.
-              </p>
-            </div>
+        {/* Departments & Programs */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-xl font-semibold text-[#002147]">Departments</h3>
+            <ul className="mt-3 text-gray-700 list-disc list-inside">
+              <li>Department of Information Systems Engineering &amp; Informatics</li>
+              <li>Department of Knowledge Engineering &amp; Communication</li>
+              <li>Department of Scientific Computing</li>
+            </ul>
+          </div>
 
-            {/* Value 2 */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-shield-alt text-2xl text-white"></i>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Security</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Protecting student data with enterprise-grade security measures.
-              </p>
-            </div>
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-xl font-semibold text-[#002147]">Undergraduate Programs</h3>
+            <p className="mt-3 text-gray-700 text-sm">The Faculty offers undergraduate degree programs that combine theoretical foundations with hands-on training in computing disciplines.</p>
+          </div>
 
-            {/* Value 3 */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-users text-2xl text-white"></i>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Collaboration</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Working together with educators to build better learning environments.
-              </p>
-            </div>
-
-            {/* Value 4 */}
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <i className="fas fa-heart text-2xl text-white"></i>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Excellence</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Committed to delivering the highest quality educational technology solutions.
-              </p>
-            </div>
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-xl font-semibold text-[#002147]">Postgraduate &amp; Research</h3>
+            <p className="mt-3 text-gray-700 text-sm">Postgraduate courses and research opportunities are available, supporting advanced study in computing, AI, and data science fields.</p>
           </div>
         </div>
+
+        {/* Research & Facilities */}
+        <section className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h4 className="text-lg font-semibold text-[#002147]">Research &amp; Innovation</h4>
+            <p className="mt-2 text-gray-700 text-sm">The Faculty engages in research across computational disciplines, collaborating with national centres and industry partners to tackle real-world problems.</p>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h4 className="text-lg font-semibold text-[#002147]">Facilities</h4>
+            <p className="mt-2 text-gray-700 text-sm">Modern computer labs, access to specialized software, and online learning platforms (LMS) support teaching and student learning.</p>
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section className="mt-12 bg-white p-6 rounded-lg shadow-sm">
+          <h4 className="text-lg font-semibold text-[#002147]">Contact &amp; Location</h4>
+          <p className="mt-2 text-gray-700 text-sm">Faculty of Computing, University of Sri Jayewardenepura — Gangodawila, Nugegoda, Sri Lanka.</p>
+          <p className="mt-2 text-gray-700 text-sm">For official information, visit the university website or the Faculty's LMS and academic pages.</p>
+        </section>
       </section>
     </div>
   );
