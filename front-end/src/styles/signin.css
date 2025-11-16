@@ -1,0 +1,58 @@
+:root{
+  --foc-navy: #002147;
+  --foc-gold: #ffd100;
+  --foc-surface: #f8fbff;
+}
+
+.foc-signin-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,251,255,0.9));
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(2,17,50,0.06);
+  border: 1px solid rgba(0,33,71,0.04);
+}
+
+.brand-hero {
+  background: linear-gradient(180deg, rgba(0,33,71,0.03), rgba(255,209,0,0.02));
+  padding: 32px;
+  border-radius: 14px;
+}
+
+.foc-ms-button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:10px 12px;
+  background: #fff;
+  border-radius:8px;
+  border:1px solid rgba(0,33,71,0.06);
+  transition: transform .14s ease, box-shadow .14s ease;
+  cursor: pointer;
+}
+.foc-ms-button:hover{ transform: translateY(-3px); box-shadow: 0 10px 26px rgba(2,17,50,0.06); }
+
+.foc-input{
+  border-radius:8px;
+  border:1px solid rgba(2,17,50,0.06);
+  padding: .6rem .75rem;
+  transition: box-shadow .12s ease, border-color .12s ease;
+}
+.foc-input:focus{ outline: none; box-shadow: 0 6px 18px rgba(2,17,50,0.06); border-color: var(--foc-navy); }
+
+.foc-submit{
+  background: linear-gradient(90deg, var(--foc-navy), #003361);
+  color: white;
+  border-radius:8px;
+  padding: .6rem .9rem;
+  box-shadow: 0 8px 20px rgba(2,17,50,0.08);
+  cursor: pointer;
+}
+.foc-submit:hover{ opacity: .98; transform: translateY(-1px); }
+
+/* small decorative accent */
+.foc-accent-line{ height:4px; width:56px; border-radius:3px; background: var(--foc-gold); box-shadow: 0 4px 18px rgba(255,209,0,0.14);} 
+
+@media (max-width: 1024px){
+  .brand-hero{ display:flex; align-items:center; justify-content:center; text-align:center; }
+}
