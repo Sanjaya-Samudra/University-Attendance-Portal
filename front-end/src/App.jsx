@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Features from "./pages/Features";
-import Services from "./pages/Services";
+// Features and Services pages removed — imports omitted
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import StudentManagement from "./pages/admin/StudentManagement";
@@ -106,25 +105,7 @@ function App() {
           }
         />
 
-        {/* Features page */}
-        <Route
-          path="/features"
-          element={
-            <LayoutNoSidebar>
-              <Features />
-            </LayoutNoSidebar>
-          }
-        />
-
-        {/* Services page */}
-        <Route
-          path="/services"
-          element={
-            <LayoutNoSidebar>
-              <Services />
-            </LayoutNoSidebar>
-          }
-        />
+        {/* Features and Services pages removed from this build */}
 
         {/* About page */}
         <Route
