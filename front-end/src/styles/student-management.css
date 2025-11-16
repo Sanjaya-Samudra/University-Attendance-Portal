@@ -1,0 +1,89 @@
+:root{
+  --foc-navy: #002147;
+  --foc-gold: #ffd100;
+  --foc-surface: #f8fbff;
+}
+
+.student-page-header{ display:flex; justify-content:space-between; align-items:center }
+.student-page-header h1{ color:var(--foc-navy); font-weight:700 }
+.student-page-header .profile { display:flex; gap:12px; align-items:center }
+
+.student-form-card{ background:linear-gradient(180deg,#fff,#fbfdff); padding:20px; border-radius:12px; box-shadow:0 10px 30px rgba(2,17,71,0.06); border:1px solid rgba(0,33,71,0.04) }
+.student-form-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:16px }
+.student-form-row{ display:flex; flex-direction:column }
+.student-form-row label{ font-weight:600; color:#334155; margin-bottom:6px }
+.student-input{ width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(2,17,50,0.08); background:transparent }
+.student-input:focus{ border-color:var(--foc-navy) }
+
+.student-actions{ display:flex; gap:12px; margin-top:12px }
+.btn-primary{ display:inline-flex; align-items:center; gap:8px; justify-content:center; background: linear-gradient(180deg, var(--foc-navy), #001731); color:#fff; padding:10px 18px; border-radius:10px; border:none; cursor:pointer; transition:none }
+.btn-primary:hover{ transform:none; filter:none }
+.btn-primary:active{ transform:none }
+.btn-primary:disabled{ opacity:0.6; cursor:not-allowed }
+.btn-primary:focus-visible{ outline:none }
+
+.btn-ghost{ display:inline-flex; align-items:center; gap:8px; justify-content:center; background:transparent; border:1px solid rgba(2,17,50,0.08); padding:10px 16px; border-radius:10px; cursor:pointer; transition:none }
+.btn-ghost:hover{ background:transparent; transform:none }
+.btn-ghost:active{ transform:none }
+.btn-ghost:disabled{ opacity:0.7; cursor:not-allowed }
+
+.student-list-card{ background:#fff; border-radius:12px; box-shadow:0 8px 20px rgba(2,17,71,0.04); overflow:hidden }
+.student-list-header{ padding:14px; border-bottom:1px solid rgba(2,17,50,0.03); background:linear-gradient(90deg, rgba(0,33,71,0.02), transparent) }
+.student-list-header h2{ color:var(--foc-navy) }
+.student-list-item{ padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed rgba(2,17,50,0.04) }
+.student-list-item .meta{ color:#64748b; font-size:0.95rem }
+
+.student-list-item:hover{ background:linear-gradient(90deg, rgba(0,33,71,0.02), transparent); cursor:default }
+
+/* Make interactive elements show pointer where appropriate */
+a, button, .quick-action, .btn-primary, .btn-ghost { cursor: pointer }
+
+@media (max-width: 768px){
+  .student-form-grid{ grid-template-columns: 1fr }
+}
+
+/* Floating label + icon field */
+.field{ position:relative; display:flex; align-items:center; overflow:visible }
+.field .input-icon{ display:none }
+.field input, .field select{ padding-left:12px }
+.field label{ position:absolute; left:12px; top:10px; font-size:0.95rem; color:#64748b; transition: none; pointer-events:none; z-index:3; padding:0 8px; border-radius:4px; background: var(--foc-surface) }
+.field input:focus + label, .field input:not(:placeholder-shown) + label, .field select:focus + label, .field select:not([value=""]) + label{ transform: translateY(-22px) scale(1); color:#1f2937 }
+
+.avatar-upload{ display:flex; gap:12px; align-items:center }
+.avatar-preview{ width:56px; height:56px; border-radius:8px; background:#fff; border:1px solid rgba(2,17,50,0.06); display:inline-flex; align-items:center; justify-content:center; color:var(--foc-navy) }
+
+/* spinner shared */
+.spinner{ display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.2); border-top-color:#fff; border-radius:50%; margin-right:6px; animation:spin .9s linear infinite }
+@keyframes spin{ to{ transform:rotate(360deg) } }
+
+.student-actions{ justify-content:flex-end; align-items:center }
+
+/* Accessibility: visible focus for inputs */
+.student-input:focus{ outline:none; border-color: #000 }
+.student-input:focus-visible{ outline:none }
+
+/* Also apply black border to select when focused (scoped to the form card) */
+.student-form-card select:focus{ border-color: #000 }
+
+/* Remove any browser-provided focus outlines/rings for controls inside the student form.
+   Scoped to `.student-form-card` to avoid globally disabling focus indicators across the app. */
+.student-form-card input:focus,
+.student-form-card textarea:focus,
+.student-form-card select:focus,
+.student-form-card button:focus,
+.student-form-card a:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.student-form-card input:focus-visible,
+.student-form-card textarea:focus-visible,
+.student-form-card select:focus-visible,
+.student-form-card button:focus-visible,
+.student-form-card a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Firefox inner focus for buttons */
+.student-form-card button::-moz-focus-inner { border: 0; padding: 0; }
+
