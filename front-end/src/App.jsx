@@ -1,18 +1,18 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/home";
 // Features and Services pages removed — imports omitted
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import StudentManagement from "./pages/admin/StudentManagement";
-import ProfessorManagement from "./pages/ProfessorManagement";
-import CourseManagement from "./pages/CourseManagement";
-import Reports from "./pages/Report";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import ProfessorManagement from "./pages/professormanagement";
+import CourseManagement from "./pages/coursemanagement";
+import Reports from "./pages/report";
+import Header from "./components/header";
+import Footer from "./components/footer";
 import AdminSidebar from "./components/AdminSidebar";
 import ProfessorSidebar from "./components/ProfessorSidebar";
 import StudentSidebar from "./components/StudentSidebar";
-import SignIn from "./pages/SignIn";
+import SignIn from "./pages/signin";
 import AdminUserManagement from "./pages/admin/AdminUserManagement";
 import CourseUnitManagement from "./pages/admin/CourseUnitManagement";
 import AdminProfessorManagement from "./pages/admin/ProfessorManagement";
@@ -171,7 +171,7 @@ function App() {
           path="/professors"
           element={
             <AdminLayout>
-              <ProfessorManagement />
+              <AdminProfessorManagement />
             </AdminLayout>
           }
         />

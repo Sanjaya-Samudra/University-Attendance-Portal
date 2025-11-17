@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
+import "../../styles/course-unit-management.css";
 
 const CourseUnitManagement = () => {
   const [formData, setFormData] = useState({
@@ -14,52 +15,43 @@ const CourseUnitManagement = () => {
     status: "",
     professor: "",
     courseName: "",
-    faculty: "",
+    faculty: "Faculty of Computing",
     credits: "",
     year: "",
     prerequisites: "",
     schedule: "",
   });
+
   const [courses, setCourses] = useState([]);
-  const [search, setSearch] = useState("");
   const [selectedDepts, setSelectedDepts] = useState([]);
   const [professors, setProfessors] = useState([]);
-  const [isSelected, setIsSelected] = useState(false)
+  const [search, setSearch] = useState("");
+  const [isSelected, setIsSelected] = useState(false);
 
-  const {backendUrl} = useContext(AppContext)
-
-
-
-  const handleChange = (e) => {
-
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const { backendUrl } = useContext(AppContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     try {
-      
-      axios.defaults.withCredentials = true
-
-      const {data} = await axios.post(backendUrl + '/course/add', {
-        code: formData.courseCode,
-        name: formData.courseName,
-        description: formData.courseDesc,
-        semester: formData.semester,
-        status: formData.status,
-        assignedProf: formData.professor,
-        credits: formData.credits,
-        yearOffered: formData.year,
-        prerequisites: formData.prerequisites,
-        courseSchedule: formData.schedule,
-        departments: formData.department
-      })
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.post(backendUrl + 
+        '/course/add', {
+          code: formData.courseCode,
+          name: formData.courseName,
+          description: formData.courseDesc,
+          semester: formData.semester,
+          status: formData.status,
+          assignedProf: formData.professor,
+          credits: formData.credits,
+          yearOffered: formData.year,
+          prerequisites: formData.prerequisites,
+          courseSchedule: formData.schedule,
+          departments: formData.department,
+        }
+      );
 
       if (data.success) {
-        toast.success(data.message)
-
+        toast.success(data.message);
         setFormData({
           courseCode: "",
           courseDesc: "",
@@ -74,19 +66,21 @@ const CourseUnitManagement = () => {
           prerequisites: "",
           schedule: "",
         });
-
-        setSelectedDepts([])
-        getAllCourse()
-
-      }else {
-        toast.error(data.message)
+        setSelectedDepts([]);
+        getAllCourse();
+      } else {
+        toast.error(data.message);
       }
-
     } catch (error) {
-      toast.error(error.message)
-      console.log(error)
+      toast.error(error.message);
+      console.log(error);
     }
-    
+
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSelect = (e) => {
@@ -99,9 +93,7 @@ const CourseUnitManagement = () => {
 
   };
 
-  const removeDept = (dept) => {
-    setSelectedDepts(selectedDepts.filter((d) => d !== dept));
-  };
+  
 
   const getAllProfessor = async () => {
     try {
@@ -283,7 +275,7 @@ const CourseUnitManagement = () => {
   },[])
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-50 min-h-screen course-unit-page">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-purple-700">Course Unit Management</h1>
@@ -300,7 +292,7 @@ const CourseUnitManagement = () => {
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 shadow-md rounded mb-6"
+        className="course-unit-form mb-6"
       >
         <div>
           <label className="block mb-1 font-medium">Course Code</label>
@@ -340,7 +332,7 @@ const CourseUnitManagement = () => {
         <div>
           <label className="block mb-1 font-medium">Semester</label>
           <select
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className=""
             defaultValue=""
             name="semester"
             onChange={handleChange}
@@ -360,9 +352,20 @@ const CourseUnitManagement = () => {
           </select>
         </div>
         <div>
+          <label className="block mb-1 font-medium">Year Offered</label>
+          <select className="" name="year" value={formData.year} onChange={handleChange} defaultValue="">
+            <option value="" disabled>Choose Year</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+
+        <div>
           <label className="block mb-1 font-medium">Status</label>
           <select
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className=""
             defaultValue=""
             name="status"
             onChange={handleChange}
@@ -425,17 +428,7 @@ const CourseUnitManagement = () => {
           />
         </div>
 
-        <div>
-          <label className="block mb-1 font-medium">Year Offered</label>
-          <input
-            type="text"
-            name="year"
-            placeholder="Year Offered"
-            value={formData.year}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-          />
-        </div>
+        
 
         <div>
           <label className="block mb-1 font-medium">Prerequisites</label>
@@ -478,74 +471,23 @@ const CourseUnitManagement = () => {
             <option value="IS" >Information System</option>
           </select>
 
-          {/* Show selected departments */}
-          <div className="mt-4">
-            {selectedDepts.length > 0 ? (
-              <ul className="space-y-2">
-                {selectedDepts.map((dept, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center justify-between bg-purple-100 px-4 py-2 rounded-lg"
-                  >
-                    <span className="text-purple-800 font-medium">{dept}</span>
-                    <button
-                      onClick={() => removeDept(dept)}
-                      className="text-red-500 hover:text-red-700 font-semibold"
-                    >
-                      ✕
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500 text-sm text-center">
-                No department selected
-              </p>
-            )}
-          </div>
+          {/* Show selected departments inside a read-only textbox (no separate chips) */}
+          {/* Selected departments display removed per request */}
         </div>
         
 
         <div className="col-span-2 flex gap-4 mt-2">
-          {
-            !isSelected && 
-            <button
-              type="submit"
-              className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition"
-            >
-              Add Course
-            </button>
-          }
-          {
-            isSelected &&
-            <button
-              type="button"
-              className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
-              onClick={handleUpdate}
-            >
-              Update
-            </button>
-          }
-          {
-            isSelected &&
-            <button
-              type="button"
-              className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition cursor-pointer"
-              onClick={handleDelete}
-            >
-              Delete
-            </button>
-          }
-          {
-            isSelected &&
-            <button
-              type="button"
-              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition cursor-pointer"
-              onClick={handleClose}
-            >
-              Close
-            </button>
-          }
+          {!isSelected && (
+            <button type="submit" className="cuc-btn cuc-btn-primary">Add Course</button>
+          )}
+
+          {isSelected && (
+            <>
+              <button type="button" className="cuc-btn cuc-btn-primary" onClick={handleUpdate}>Update</button>
+              <button type="button" className="cuc-btn cuc-btn-danger" onClick={handleDelete}>Delete</button>
+              <button type="button" className="cuc-btn cuc-btn-ghost" onClick={handleClose}>Close</button>
+            </>
+          )}
         </div>
       </form>
 
@@ -556,14 +498,14 @@ const CourseUnitManagement = () => {
           placeholder="Enter Course Name or Code"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="search-input md:w-1/2"
         />
       </div>
 
       {/* Course Table */}
-      <div className="bg-white shadow-md rounded">
-        <div className="p-4 border-b">
-          <h2 className="text-xl font-bold text-purple-700">Course List</h2>
+      <div className="course-list-card">
+        <div className="card-header">
+          <h2 className="text-xl font-bold">Course List</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
