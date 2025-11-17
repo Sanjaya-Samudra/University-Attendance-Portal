@@ -26,7 +26,8 @@
   padding:10px 12px;
   background: #fff;
   border-radius:8px;
-  border:1px solid rgba(0,33,71,0.06);
+  /* keep the button neutral — remove any warm/gold border appearance */
+  border:1px solid rgba(0,33,71,0.04);
   transition: transform .14s ease, box-shadow .14s ease;
   cursor: pointer;
 }
@@ -52,6 +53,10 @@
 
 /* small decorative accent */
 .foc-accent-line{ height:4px; width:56px; border-radius:3px; background: var(--foc-gold); box-shadow: 0 4px 18px rgba(255,209,0,0.14);} 
+
+/* Remove any yellow/gold visible on the Microsoft button by recoloring
+  the logo's bottom-right square to the theme navy when inside our button. */
+.foc-ms-button svg rect:nth-child(4) { fill: var(--foc-navy) !important; }
 
 @media (max-width: 1024px){
   .brand-hero{ display:flex; align-items:center; justify-content:center; text-align:center; }
