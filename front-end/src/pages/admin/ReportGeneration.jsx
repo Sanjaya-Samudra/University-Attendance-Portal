@@ -27,19 +27,13 @@ const ReportGeneration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      const mockData = [
-        { studentId: "ST001", name: "John Doe", attendancePercent: 85, presentDays: 17, absentDays: 3 },
-        { studentId: "ST002", name: "Jane Smith", attendancePercent: 92, presentDays: 18, absentDays: 2 },
-        { studentId: "ST003", name: "Bob Johnson", attendancePercent: 78, presentDays: 16, absentDays: 4 },
-        { studentId: "ST004", name: "Alice Brown", attendancePercent: 95, presentDays: 19, absentDays: 1 },
-      ];
-      setReportData(mockData);
-      setShowReport(true);
-      setLoading(false);
-    }, 1200);
+    // Removed demo/mock data. Replace with real API call to fetch report results.
+    // Example:
+    // const { data } = await axios.post(backendUrl + '/report/generate', formData)
+    // setReportData(data.message || [])
+    setReportData([]);
+    setShowReport(true);
+    setLoading(false);
   };
 
   const downloadPDF = () => {
@@ -64,7 +58,7 @@ const ReportGeneration = () => {
             value={formData.courseModule}
             onChange={handleChange}
             placeholder="Select Module"
-            options={[{ value: '', label: 'Select Module' }, { value: 'MOD001', label: 'Introduction to Programming' }, { value: 'MOD002', label: 'Database Systems' }]}
+            options={[]}
           />
         </div>
 
@@ -75,7 +69,7 @@ const ReportGeneration = () => {
             value={formData.year}
             onChange={handleChange}
             placeholder="Select Year"
-            options={[{ value: '', label: 'Select Year' }, { value: '1', label: 'Year 1' }, { value: '2', label: 'Year 2' }, { value: '3', label: 'Year 3' }, { value: '4', label: 'Year 4' }]}
+            options={[]}
           />
         </div>
 
@@ -86,7 +80,7 @@ const ReportGeneration = () => {
             value={formData.semester}
             onChange={handleChange}
             placeholder="Select Semester"
-            options={[{ value: '', label: 'Select Semester' }, { value: '1', label: 'Semester 1' }, { value: '2', label: 'Semester 2' }]}
+            options={[]}
           />
         </div>
 
@@ -99,7 +93,7 @@ const ReportGeneration = () => {
             value={formData.department}
             onChange={handleChange}
             placeholder="Select Department"
-            options={[{ value: '', label: 'Select Department' }, { value: 'ISEI', label: 'Information Systems Engineering & Informatics' }, { value: 'KEC', label: 'Knowledge Engineering & Communication' }, { value: 'SC', label: 'Scientific Computing' }]}
+            options={[]}
           />
         </div>
 
@@ -149,41 +143,47 @@ const ReportGeneration = () => {
           <div className="p-4 border-b">
             <h2 className="text-xl font-bold rg-title">Attendance Report</h2>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full rg-table">
-              <thead>
-                <tr className="border-b">
-                  <th className="px-4 py-2 text-left">Student ID</th>
-                  <th className="px-4 py-2 text-left">Name</th>
-                  <th className="px-4 py-2 text-left">Attendance %</th>
-                  <th className="px-4 py-2 text-left">Present Days</th>
-                  <th className="px-4 py-2 text-left">Absent Days</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reportData.map((student, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50">
-                    <td className="px-4 py-2">{student.studentId}</td>
-                    <td className="px-4 py-2">{student.name}</td>
-                    <td className="px-4 py-2">
-                      <span className={`px-2 py-1 rounded text-sm ${
-                        student.attendancePercent >= 90 ? 'att-high' :
-                        student.attendancePercent >= 75 ? 'att-medium' :
-                        'att-low'
-                      }`}>
-                        {student.attendancePercent}%
-                      </span>
-                    </td>
-                    <td className="px-4 py-2">{student.presentDays}</td>
-                    <td className="px-4 py-2">{student.absentDays}</td>
+          <div className="overflow-x-auto p-4">
+            {reportData && reportData.length > 0 ? (
+              <table className="w-full rg-table">
+                <thead>
+                  <tr className="border-b">
+                    <th className="px-4 py-2 text-left">Student ID</th>
+                    <th className="px-4 py-2 text-left">Name</th>
+                    <th className="px-4 py-2 text-left">Attendance %</th>
+                    <th className="px-4 py-2 text-left">Present Days</th>
+                    <th className="px-4 py-2 text-left">Absent Days</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {reportData.map((student, index) => (
+                    <tr key={index} className="border-b hover:bg-gray-50">
+                      <td className="px-4 py-2">{student.studentId}</td>
+                      <td className="px-4 py-2">{student.name}</td>
+                      <td className="px-4 py-2">
+                        <span className={`px-2 py-1 rounded text-sm ${
+                          student.attendancePercent >= 90 ? 'att-high' :
+                          student.attendancePercent >= 75 ? 'att-medium' :
+                          'att-low'
+                        }`}>
+                          {student.attendancePercent}%
+                        </span>
+                      </td>
+                      <td className="px-4 py-2">{student.presentDays}</td>
+                      <td className="px-4 py-2">{student.absentDays}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="p-8 text-center text-gray-600">No report data found for the selected filters.</div>
+            )}
           </div>
-          <div className="text-center p-4">
-            <button onClick={downloadPDF} className="rg-download">Download PDF Report</button>
-          </div>
+          {reportData && reportData.length > 0 && (
+            <div className="text-center p-4">
+              <button onClick={downloadPDF} className="rg-download">Download PDF Report</button>
+            </div>
+          )}
         </div>
       )}
     </div>

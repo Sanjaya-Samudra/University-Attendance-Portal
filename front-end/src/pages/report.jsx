@@ -25,14 +25,10 @@ export default function Reports() {
     e.preventDefault();
     setLoading(true);
 
-    // Placeholder: Replace with real API call
-    setTimeout(() => {
-      setReportData([
-        { id: "S001", name: "John Doe", attendance: 92, present: 46, absent: 4 },
-        { id: "S002", name: "Jane Smith", attendance: 85, present: 42, absent: 8 },
-      ]);
-      setLoading(false);
-    }, 1000);
+    // NOTE: Removed demo data — replace with real API call to fetch report
+    // Example: call backend endpoint and setReportData(response.data)
+    setReportData([]);
+    setLoading(false);
   };
 
   return (
@@ -63,8 +59,6 @@ export default function Reports() {
           className="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           <option value="">Select Course Module</option>
-          <option value="CS101">CS101</option>
-          <option value="CS102">CS102</option>
         </select>
 
         <select
@@ -75,8 +69,6 @@ export default function Reports() {
           className="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           <option value="">Select Year</option>
-          <option value="1">Year 1</option>
-          <option value="2">Year 2</option>
         </select>
 
         <select
@@ -87,8 +79,6 @@ export default function Reports() {
           className="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           <option value="">Select Semester</option>
-          <option value="1">Semester 1</option>
-          <option value="2">Semester 2</option>
         </select>
 
         <select
@@ -99,8 +89,6 @@ export default function Reports() {
           className="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           <option value="">Select Faculty</option>
-          <option value="Engineering">Engineering</option>
-          <option value="Science">Science</option>
         </select>
 
         <select
@@ -111,8 +99,6 @@ export default function Reports() {
           className="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           <option value="">Select Department</option>
-          <option value="CS">Computer Science</option>
-          <option value="SE">Software Engineering</option>
         </select>
 
         <input

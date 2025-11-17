@@ -35,7 +35,18 @@
 .custom-select-empty{ padding:12px 14px; color:#94a3b8 }
 
 .foc-btn-primary{ background:var(--foc-navy); color:#fff; padding:10px 18px; border-radius:10px; border:1px solid transparent; cursor:pointer }
-.foc-btn-primary:hover{ filter:brightness(0.95) }
+.foc-btn-primary{
+  background: linear-gradient(180deg,var(--foc-navy), #001a3d);
+  color:#fff; padding:10px 18px; border-radius:10px; border:1px solid transparent; cursor:pointer;
+  box-shadow: 0 8px 20px rgba(0,33,71,0.12);
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  position:relative; overflow:hidden;
+}
+.foc-btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,33,71,0.14); }
+.foc-btn-primary:active{ transform:translateY(0) scale(.995); box-shadow:0 6px 12px rgba(0,33,71,0.10); }
+.foc-btn-primary:focus{ outline:none; box-shadow:0 0 0 4px rgba(255,209,0,0.12); }
+
+/* removed the animated gold underline per design feedback */
 .foc-btn-ghost{ background:transparent; color:var(--foc-navy); padding:10px 16px; border-radius:10px; border:1px solid rgba(2,17,50,0.08); cursor:pointer }
 
 .rg-table thead tr{ background: linear-gradient(90deg, rgba(0,33,71,0.03), transparent); }
@@ -46,7 +57,13 @@
 .att-medium{ background:#fff7ed; color:#92400e; padding:4px 8px; border-radius:6px }
 .att-low{ background:#fff1f2; color:#9f1239; padding:4px 8px; border-radius:6px }
 
-.rg-download{ background:var(--foc-gold); color:var(--foc-navy); padding:10px 18px; border-radius:10px; border:none; cursor:pointer }
+.rg-download{
+  background:var(--foc-gold); color:var(--foc-navy); padding:10px 18px; border-radius:10px; border:none; cursor:pointer;
+  box-shadow: 0 8px 18px rgba(255,209,0,0.12);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.rg-download:hover{ transform: translateY(-2px); box-shadow:0 12px 28px rgba(255,209,0,0.16); }
+.rg-download:active{ transform: translateY(0); box-shadow:0 6px 12px rgba(255,209,0,0.10); }
 
 @media (min-width: 768px){
   .foc-grid{ grid-template-columns: repeat(2,1fr) }
