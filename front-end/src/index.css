@@ -25,3 +25,29 @@
         .sidebar-item:hover .sidebar-icon {
             transform: scale(1.2);
         }
+
+/* Unified interaction styles for admin sidebar nav items */
+.sidebar-item{
+    border-radius:8px;
+    transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease, color .12s ease;
+    will-change: transform, box-shadow;
+}
+.sidebar-item:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,33,71,0.08);
+    background-color: #f2f6ff; /* kept earlier hover bg */
+    color: #002147;
+}
+.sidebar-item:active{
+    transform: translateY(0) scale(.995);
+    box-shadow: 0 6px 12px rgba(0,33,71,0.06);
+}
+.sidebar-item:focus{
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0,33,71,0.06);
+    border-radius:8px;
+}
+
+/* Apply report-generation button interaction to other admin primary buttons
+   Keeps existing background/branding but standardizes hover/press/focus feel */
+/* button interactions moved to component-specific CSS files (professor, course unit, student) */

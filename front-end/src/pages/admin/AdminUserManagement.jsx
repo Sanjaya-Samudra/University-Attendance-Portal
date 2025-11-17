@@ -1,23 +1,12 @@
 import React, { useState } from "react";
+import '../../styles/admin-user-management.css'
 
 const AdminUserManagement = () => {
-  const [formData, setFormData] = useState({
-    lecture_id: "",
-    full_name: "",
-    nic: "",
-    regi_num: "",
-    year: "",
-    contact_num: "",
-    address: "",
-    email: "",
-    lecture_dep_id: "",
-    password: "",
-  });
-
+  // Simplified admin user model: only email and password are required
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [search, setSearch] = useState("");
-  const [professors, setProfessors] = useState([]);
-
-  const departments = ["CS", "SE", "IS"]; // Example departments
+  const [admins, setAdmins] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,211 +15,123 @@ const AdminUserManagement = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add professor to list (demo only)
-    setProfessors([...professors, formData]);
-    setFormData({
-      lecture_id: "",
-      full_name: "",
-      nic: "",
-      regi_num: "",
-      year: "",
-      contact_num: "",
-      address: "",
-      email: "",
-      lecture_dep_id: "",
-      password: "",
-    });
-    alert("Professor added!");
+    const email = (formData.email || '').trim().toLowerCase();
+    const password = formData.password || '';
+    if (!email || !password) {
+      alert('Please provide email and password');
+      return;
+    }
+
+    if (selectedIndex === null) {
+      // create new admin; prevent duplicate emails
+      if (admins.find(a => a.email === email)) {
+        alert('An admin with this email already exists');
+        return;
+      }
+      setAdmins([...admins, { email, password }]);
+      setFormData({ email: '', password: '' });
+      alert('Admin user created');
+    } else {
+      // update existing admin's password
+      const updated = admins.slice();
+      updated[selectedIndex] = { ...updated[selectedIndex], password };
+      setAdmins(updated);
+      setSelectedIndex(null);
+      setFormData({ email: '', password: '' });
+      alert('Admin password updated');
+    }
   };
 
-  const filteredProfessors = professors.filter(
-    (prof) =>
-      prof.full_name.toLowerCase().includes(search.toLowerCase()) ||
-      prof.regi_num.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredAdmins = admins.filter(a => (a.email || '').toLowerCase().includes(search.toLowerCase()));
+
+  const handleSelectAdmin = (index) => {
+    const a = admins[index];
+    setSelectedIndex(index);
+    setFormData({ email: a.email, password: '' });
+  };
+
+  const handleDelete = (index) => {
+    if (!confirm('Delete this admin account?')) return;
+    const updated = admins.slice();
+    updated.splice(index, 1);
+    setAdmins(updated);
+    if (selectedIndex === index) {
+      setSelectedIndex(null);
+      setFormData({ email: '', password: '' });
+    }
+  };
+
+  const handleCancel = () => {
+    setSelectedIndex(null);
+    setFormData({ email: '', password: '' });
+  };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-purple-700">Admin User Management</h1>
-        <div className="flex items-center gap-3">
-          <img
-            src="/user.jpg"
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-          <span className="font-medium">Admin</span>
+    <div className="aum-container">
+      <div className="aum-header">
+        <div>
+          <div className="aum-title">Admin User Management</div>
+          <div className="aum-sub">Create admin users and update their passwords</div>
         </div>
+        <div className="aum-badge">Admin</div>
       </div>
 
-      {/* Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 shadow-md rounded mb-6"
-      >
-        <input
-          type="hidden"
-          name="lecture_id"
-          value={formData.lecture_id}
-        />
-        <div>
-          <label className="block mb-1 font-medium">Full Name</label>
-          <input
-            type="text"
-            name="full_name"
-            placeholder="Full Name"
-            value={formData.full_name}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">NIC</label>
-          <input
-            type="text"
-            name="nic"
-            placeholder="NIC"
-            value={formData.nic}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Registration Number</label>
-          <input
-            type="text"
-            name="regi_num"
-            placeholder="Registration Number"
-            value={formData.regi_num}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Year</label>
-          <input
-            type="number"
-            name="year"
-            placeholder="Year"
-            value={formData.year}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Contact Number</label>
-          <input
-            type="text"
-            name="contact_num"
-            placeholder="Contact Number"
-            value={formData.contact_num}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Address</label>
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            value={formData.address}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Department</label>
-          <select
-            name="lecture_dep_id"
-            value={formData.lecture_dep_id}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          >
-            <option value="">Select Department</option>
-            {departments.map((dep, idx) => (
-              <option key={idx} value={dep}>
-                {dep}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          />
+      <div className="aum-grid">
+        <div className="aum-card">
+          <form className="aum-form" onSubmit={handleSubmit}>
+            <div className="aum-row">
+              <div className="full">
+                <label className="aum-label">Email</label>
+                <input name="email" type="email" value={formData.email} onChange={handleChange} className="aum-input" placeholder="admin@university.edu" required disabled={selectedIndex !== null} />
+              </div>
+            </div>
+
+            <div className="aum-row">
+              <div className="full">
+                <label className="aum-label">Password</label>
+                <input name="password" type="password" value={formData.password} onChange={handleChange} className="aum-input" placeholder={selectedIndex === null ? 'Create a password' : 'New password to update'} required />
+              </div>
+            </div>
+
+            <div className="aum-actions">
+              <button type="button" className="aum-btn-ghost" onClick={handleCancel}>Cancel</button>
+              <button type="submit" className="aum-btn-primary">{selectedIndex === null ? 'Create Admin' : 'Update Password'}</button>
+            </div>
+          </form>
         </div>
 
-        <div className="col-span-2 flex gap-4 mt-2">
-          <button
-            type="submit"
-            className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition"
-          >
-            Save
-          </button>
-        </div>
-      </form>
+        <div>
+          <div className="aum-card">
+            <div className="aum-list-header">
+              <div>
+                <div className="aum-list-title">Admin Accounts</div>
+                <div className="muted">Search and update passwords</div>
+              </div>
+              <div className="aum-search">
+                <input className="aum-input" placeholder="Search by email" value={search} onChange={(e) => setSearch(e.target.value)} />
+              </div>
+            </div>
 
-      {/* Search */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search by name or ID..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-        />
-      </div>
-
-      {/* Professor List */}
-      <div className="bg-white shadow-md rounded">
-        <div className="p-4 border-b">
-          <h2 className="text-xl font-bold text-purple-700">Professor List</h2>
+            <div className="aum-list">
+              {filteredAdmins.length > 0 ? (
+                filteredAdmins.map((a, idx) => (
+                  <div key={idx} className="item">
+                    <div>
+                      <div className="font-medium">{a.email}</div>
+                      <div className="meta">Admin account</div>
+                    </div>
+                    <div style={{display: 'flex', gap: 8}}>
+                      <button className="aum-btn-ghost" onClick={() => handleSelectAdmin(idx)}>Edit</button>
+                      <button className="aum-btn-ghost" onClick={() => handleDelete(idx)}>Delete</button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="aum-empty">No admin accounts yet — create one using the form.</div>
+              )}
+            </div>
+          </div>
         </div>
-        {filteredProfessors.length > 0 ? (
-          <ul className="divide-y">
-            {filteredProfessors.map((prof, idx) => (
-              <li key={idx} className="px-4 py-3 flex justify-between items-center">
-                <div>
-                  <span className="font-medium">{prof.full_name}</span>
-                  <span className="text-gray-500 ml-2">({prof.regi_num})</span>
-                </div>
-                <div className="text-sm text-gray-600">
-                  {prof.lecture_dep_id} - Year {prof.year}
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="p-4 text-gray-500">No professors found</p>
-        )}
       </div>
     </div>
   );
