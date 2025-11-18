@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {AppContext} from '../../context/AppContext.jsx'
+import '../../styles/admin-dashboard.css'
 
 const ProfessorDashboard = () => {
   // Stats will be fetched from backend
@@ -54,104 +55,67 @@ const ProfessorDashboard = () => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-purple-700">Professor Dashboard</h1>
+      <div className="admin-header mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-[var(--foc-navy)]">Professor Dashboard</h1>
+          <p className="text-sm text-gray-600">Faculty of Computing — Professor panel</p>
+        </div>
+
         <div className="flex items-center gap-3">
-          <img
-            src="/user.jpg"
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-          <span className="font-medium">Professor</span>
+          <div className="text-right">
+            <div className="text-sm text-gray-500">Welcome back,</div>
+            <div className="font-medium text-[var(--foc-navy)]">Professor</div>
+          </div>
+          <img src="/user.jpg" alt="Profile" className="w-12 h-12 rounded-full object-cover border-2 border-[var(--foc-navy)]" />
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat, index) => (
-          <div key={index} className="bg-white p-6 shadow-md rounded flex items-center">
-            <div className="text-4xl mr-4">{stat.icon}</div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-700">{stat.title}</h3>
-              <p className="text-2xl font-bold text-purple-700">{stat.value}</p>
+      {/* KPIs */}
+      <div className="kpi-grid mb-8">
+        {stats && stats.length ? stats.map((stat, idx) => (
+          <div key={idx} className="kpi-card flex items-center gap-4">
+            <div className="kpi-icon">{stat.icon}</div>
+            <div style={{flex:1}}>
+              <div className="kpi-title">{stat.title}</div>
+              <div className="kpi-value">{stat.value ?? '-'}</div>
             </div>
           </div>
-        ))}
+        )) : (
+          <div className="text-gray-500">No dashboard data available.</div>
+        )}
       </div>
 
-      {/* Navigation Cards */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold text-purple-700 mb-4">Teaching Tools</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {navigationItems.map((item, index) => (
-            <Link
-              key={index}
-              to={item.path}
-              className="bg-white p-6 shadow-md rounded hover:shadow-lg transition transform hover:-translate-y-1"
-            >
-              <div className="flex items-center">
-                <div className="text-3xl mr-4">{item.icon}</div>
+      <div className="dashboard-grid mb-8">
+        <div>
+          <h3 className="text-lg font-semibold text-[var(--foc-navy)] mb-3">Teaching Tools</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {navigationItems.map((item, i) => (
+              <Link key={i} to={item.path} className="quick-action flex items-center gap-4 hover:shadow-lg transition-transform">
+                <div className="text-2xl p-2 rounded bg-[var(--foc-surface)]">{item.icon}</div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">{item.label}</h3>
-                  <p className="text-sm text-gray-600">Click to access</p>
+                  <div className="font-semibold text-gray-800">{item.label}</div>
+                  <div className="text-sm text-gray-500">Open the tool</div>
                 </div>
+                <div className="ml-auto text-[var(--foc-gold)] font-bold">›</div>
+              </Link>
+            ))}
+          </div>
+
+        </div>
+
+        {/* Right column */}
+        <div>
+          <h3 className="text-lg font-semibold text-[var(--foc-navy)] mb-3">Recent Attendance</h3>
+          <div className="recent-activity-list">
+            {recentAttendance && recentAttendance.length ? recentAttendance.slice(0,6).map((session, idx) => (
+              <div key={idx} className="notice-item">
+                <div className="title">{session.course}</div>
+                <div className="text-sm text-gray-500">{session.date} — {session.present}/{session.students} present</div>
               </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* Recent Attendance */}
-      <div className="bg-white p-6 shadow-md rounded mb-6">
-        <h2 className="text-xl font-bold text-purple-700 mb-4">Recent Attendance Sessions</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-2">Course</th>
-                <th className="text-left py-2">Total Students</th>
-                <th className="text-left py-2">Present</th>
-                <th className="text-left py-2">Attendance %</th>
-                <th className="text-left py-2">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentAttendance.map((session, index) => (
-                <tr key={index} className="border-b">
-                  <td className="py-2">{session.course}</td>
-                  <td className="py-2">{session.students}</td>
-                  <td className="py-2">{session.present}</td>
-                  <td className="py-2">{Math.round((session.present / session.students) * 100)}%</td>
-                  <td className="py-2">{session.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="bg-white p-6 shadow-md rounded">
-        <h2 className="text-xl font-bold text-purple-700 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link
-            to="/attendance-mark"
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition text-center"
-          >
-            Mark Attendance
-          </Link>
-          <Link
-            to="/professor-report-generation"
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition text-center"
-          >
-            View Reports
-          </Link>
-          <Link
-            to="/professor-profile"
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition text-center"
-          >
-            Update Profile
-          </Link>
+            )) : (
+              <div className="text-gray-500">No recent attendance sessions.</div>
+            )}
+          </div>
         </div>
       </div>
     </div>
