@@ -11,11 +11,7 @@ const CourseManagement = () => {
     name: "",
     credits: "",
   });
-  const [courses, setCourses] = useState([
-    { code: "CS101", name: "Introduction to Computing", credits: 3 },
-    { code: "SE201", name: "Software Engineering", credits: 4 },
-    { code: "IS301", name: "Information Systems", credits: 3 },
-  ]);
+  const [courses, setCourses] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const {backendUrl} = useContext(AppContext)
 

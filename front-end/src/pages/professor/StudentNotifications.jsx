@@ -44,66 +44,8 @@ const StudentNotifications = () => {
       // Mock API call - replace with actual API
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Mock notifications data
-      const mockNotifications = [
-        {
-          id: 1,
-          type: "attendance",
-          title: "Low Attendance Alert",
-          message: "Student ST001 (Alice Johnson) has attendance below 75% in CS101 course.",
-          timestamp: "2024-01-15T10:30:00Z",
-          isRead: false,
-          isImportant: true,
-          studentId: "ST001",
-          courseId: "CS101",
-        },
-        {
-          id: 2,
-          type: "system",
-          title: "Course Registration Update",
-          message: "New students have been registered for your CS201 course.",
-          timestamp: "2024-01-14T14:20:00Z",
-          isRead: false,
-          isImportant: false,
-          studentId: null,
-          courseId: "CS201",
-        },
-        {
-          id: 3,
-          type: "attendance",
-          title: "Attendance Marked",
-          message: "Attendance has been successfully recorded for today's CS301 lecture.",
-          timestamp: "2024-01-13T16:45:00Z",
-          isRead: true,
-          isImportant: false,
-          studentId: null,
-          courseId: "CS301",
-        },
-        {
-          id: 4,
-          type: "important",
-          title: "Grade Submission Deadline",
-          message: "Reminder: Final grades for Semester 1 must be submitted by January 25th.",
-          timestamp: "2024-01-12T09:00:00Z",
-          isRead: false,
-          isImportant: true,
-          studentId: null,
-          courseId: null,
-        },
-        {
-          id: 5,
-          type: "system",
-          title: "Schedule Change",
-          message: "CS401 lecture on Friday has been moved to Room 205.",
-          timestamp: "2024-01-11T11:15:00Z",
-          isRead: true,
-          isImportant: false,
-          studentId: null,
-          courseId: "CS401",
-        },
-      ];
-
-      setNotifications(mockNotifications);
+      // Notifications will be loaded from backend; removed mock/demo entries
+      setNotifications([]);
     } catch {
       setError("Failed to load notifications. Please try again.");
     } finally {

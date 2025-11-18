@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
 import "../../styles/course-unit-management.css";
+import CustomSelect from '../../components/CustomSelect.jsx'
 
 const CourseUnitManagement = () => {
   const [formData, setFormData] = useState({
@@ -331,52 +332,34 @@ const CourseUnitManagement = () => {
         </div>
         <div>
           <label className="block mb-1 font-medium">Semester</label>
-          <select
-            className=""
-            defaultValue=""
+          <CustomSelect
             name="semester"
-            onChange={handleChange}
             value={formData.semester}
-          >
-            <option value="" disabled>
-              Choose a Semester
-            </option>
-            <option value={1}>1st Semester</option>
-            <option value={2}>2nd Semester</option>
-            <option value={3}>3rd Semester</option>
-            <option value={4}>4th Semester</option>
-            <option value={5}>5th Semester</option>
-            <option value={6}>6th Semester</option>
-            <option value={7}>7th Semester</option>
-            <option value={8}>8th Semester</option>
-          </select>
+            onChange={handleChange}
+            placeholder="Choose a Semester"
+            options={[]}
+          />
         </div>
         <div>
           <label className="block mb-1 font-medium">Year Offered</label>
-          <select className="" name="year" value={formData.year} onChange={handleChange} defaultValue="">
-            <option value="" disabled>Choose Year</option>
-            <option value="1">1st Year</option>
-            <option value="2">2nd Year</option>
-            <option value="3">3rd Year</option>
-            <option value="4">4th Year</option>
-          </select>
+          <CustomSelect
+            name="year"
+            value={formData.year}
+            onChange={handleChange}
+            placeholder="Choose Year"
+            options={[]}
+          />
         </div>
 
         <div>
           <label className="block mb-1 font-medium">Status</label>
-          <select
-            className=""
-            defaultValue=""
+          <CustomSelect
             name="status"
-            onChange={handleChange}
             value={formData.status}
-          >
-            <option value="" disabled>
-              Choose a Status
-            </option>
-            <option value='active'>Active</option>
-            <option value='Close'>Close</option>
-          </select>
+            onChange={handleChange}
+            placeholder="Choose a Status"
+            options={[]}
+          />
         </div>
         <div>
           <label className="block mb-1 font-medium">Assigned Professor</label>
@@ -387,22 +370,13 @@ const CourseUnitManagement = () => {
             onChange={handleChange}
             className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
           /> */}
-          <select
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            defaultValue=""
+          <CustomSelect
             name="professor"
-            onChange={handleChange}
             value={formData.professor}
-          >
-            <option value="" disabled>
-              Choose a Professor
-            </option>
-            {professors.map((pro, i) => (
-              <option key={i} value={pro._id}>
-                {pro.fullName}
-              </option>
-            ))}
-          </select>
+            onChange={handleChange}
+            placeholder="Choose a Professor"
+            options={[{ value: '', label: 'Choose a Professor' }, ...professors.map(p => ({ value: p._id, label: p.fullName }))]}
+          />
         </div>
         
         <div>
@@ -457,19 +431,13 @@ const CourseUnitManagement = () => {
         {/* Select Department */}
         <div>
           <label className="block mb-1 font-medium">Select Departments</label>
-          <select
-            className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            onChange={handleSelect}
-            defaultValue=""
+          <CustomSelect
+            name="department"
             value={formData.department}
-          >
-            <option value="" disabled>
-                Choose a department
-              </option>
-            <option value="SE" >Software Engineering</option>
-            <option value="CS" >Computer Science</option>
-            <option value="IS" >Information System</option>
-          </select>
+            onChange={handleSelect}
+            placeholder="Choose a department"
+            options={[]}
+          />
 
           {/* Show selected departments inside a read-only textbox (no separate chips) */}
           {/* Selected departments display removed per request */}

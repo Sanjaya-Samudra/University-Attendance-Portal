@@ -1,44 +1,7 @@
 import React, { useState } from "react";
 
 const ProfessorNotification = () => {
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      subject: "Class Schedule Update",
-      message: "CS101 class has been rescheduled to 2:00 PM tomorrow.",
-      type: "system",
-      timestamp: "2025-10-12 09:30 AM",
-      isRead: false,
-      isImportant: true,
-    },
-    {
-      id: 2,
-      subject: "Student Attendance Alert",
-      message: "Student John Doe has low attendance in SE201 (below 75%).",
-      type: "alert",
-      timestamp: "2025-10-11 03:15 PM",
-      isRead: false,
-      isImportant: true,
-    },
-    {
-      id: 3,
-      subject: "New Course Material Available",
-      message: "New lecture notes for IS301 have been uploaded.",
-      type: "system",
-      timestamp: "2025-10-10 11:45 AM",
-      isRead: true,
-      isImportant: false,
-    },
-    {
-      id: 4,
-      subject: "Faculty Meeting Reminder",
-      message: "Department meeting scheduled for Friday at 10:00 AM.",
-      type: "system",
-      timestamp: "2025-10-09 08:20 AM",
-      isRead: true,
-      isImportant: false,
-    },
-  ]);
+  const [notifications, setNotifications] = useState([]);
 
   const [filter, setFilter] = useState("all");
   const [selectedNotification, setSelectedNotification] = useState(null);

@@ -16,11 +16,13 @@
 .student-input:focus{ border-color:var(--foc-navy) }
 
 .student-actions{ display:flex; gap:12px; margin-top:12px }
-.btn-primary{ display:inline-flex; align-items:center; gap:8px; justify-content:center; background: linear-gradient(180deg, var(--foc-navy), #001731); color:#fff; padding:10px 18px; border-radius:10px; border:none; cursor:pointer; transition:none }
-.btn-primary:hover{ transform:none; filter:none }
-.btn-primary:active{ transform:none }
+.btn-primary{ display:inline-flex; align-items:center; gap:8px; justify-content:center; background: linear-gradient(180deg, var(--foc-navy), #001731); color:#fff; padding:10px 18px; border-radius:10px; border:none; cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease; will-change: transform, box-shadow; box-shadow: 0 8px 20px rgba(0,33,71,0.12);
+}
+.btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,33,71,0.14); }
+.btn-primary:active{ transform: translateY(0) scale(.995); box-shadow: 0 6px 12px rgba(0,33,71,0.10); }
 .btn-primary:disabled{ opacity:0.6; cursor:not-allowed }
-.btn-primary:focus-visible{ outline:none }
+.btn-primary:focus-visible{ outline: none; box-shadow: 0 0 0 4px rgba(255,209,0,0.12); }
 
 .btn-ghost{ display:inline-flex; align-items:center; gap:8px; justify-content:center; background:transparent; border:1px solid rgba(2,17,50,0.08); padding:10px 16px; border-radius:10px; cursor:pointer; transition:none }
 .btn-ghost:hover{ background:transparent; transform:none }
@@ -65,12 +67,11 @@ a, button, .quick-action, .btn-primary, .btn-ghost { cursor: pointer }
 /* Also apply black border to select when focused (scoped to the form card) */
 .student-form-card select:focus{ border-color: #000 }
 
-/* Remove any browser-provided focus outlines/rings for controls inside the student form.
-   Scoped to `.student-form-card` to avoid globally disabling focus indicators across the app. */
+/* Remove any browser-provided focus outlines/rings for controls inside the student form,
+   but keep focus styles for primary action buttons (.btn-primary). Scoped to `.student-form-card` to avoid globally disabling focus indicators across the app. */
 .student-form-card input:focus,
 .student-form-card textarea:focus,
 .student-form-card select:focus,
-.student-form-card button:focus,
 .student-form-card a:focus {
   outline: none !important;
   box-shadow: none !important;
@@ -78,8 +79,14 @@ a, button, .quick-action, .btn-primary, .btn-ghost { cursor: pointer }
 .student-form-card input:focus-visible,
 .student-form-card textarea:focus-visible,
 .student-form-card select:focus-visible,
-.student-form-card button:focus-visible,
 .student-form-card a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* keep focus visible for primary buttons inside the student form */
+.student-form-card button:not(.btn-primary):focus,
+.student-form-card button:not(.btn-primary):focus-visible {
   outline: none !important;
   box-shadow: none !important;
 }

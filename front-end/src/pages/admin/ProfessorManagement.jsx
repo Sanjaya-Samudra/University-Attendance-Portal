@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {AppContext} from '../../context/AppContext.jsx'
 import Swal from "sweetalert2";
 import "../../styles/professor-management.css";
+import CustomSelect from '../../components/CustomSelect.jsx'
 
 const ProfessorManagement = () => {
   
@@ -51,8 +52,9 @@ const ProfessorManagement = () => {
     try {
       
       axios.defaults.allowAbsoluteUrls = true
+      axios.defaults.withCredentials = true
 
-      const {data} = await axios.post(backendUrl + '/professor/add', {
+      const payload = {
         fullName: formData.fullName,
         designation: formData.designation,
         doj: formData.dateofjoin,
@@ -61,8 +63,10 @@ const ProfessorManagement = () => {
         uniId: formData.uniID,
         contactNum: formData.contactNumber,
         address: formData.address,
-        nic: formData.nicNO 
-      })
+        nic: formData.nicNO,
+      }
+
+      const { data } = await axios.post(backendUrl + '/professor/add', payload)
 
       if (data.success) {
         toast.success(data.message)
@@ -78,9 +82,10 @@ const ProfessorManagement = () => {
           email: "",
           nicNO: "",
           status: "Active",
-        });
-        getAllProfessor()
-      }else {
+        })
+
+        await getAllProfessor()
+      } else {
         toast.error(data.message)
       }
 
@@ -292,82 +297,83 @@ const ProfessorManagement = () => {
       {/* Themed Form */}
       <form onSubmit={handleSubmit} className="professor-form-card mb-6">
         <div className="professor-form-grid">
-          <div className="prof-field">
-            <input placeholder=" " name="fullName" value={formData.fullName} onChange={handleChange} className="prof-input" required />
-            <label>Full Name</label>
+          <div>
+            <label className="block mb-1 font-medium">Full Name</label>
+            <input name="fullName" value={formData.fullName} onChange={handleChange} className="prof-input" required />
           </div>
 
-          <div className="prof-field">
-            <select name="department" value={formData.department} onChange={handleDepartmentChange} className="prof-input" required>
-              <option value="">Select Department</option>
-              <option value="ISEI">Information Systems Engineering & Informatics</option>
-              <option value="KEC">Knowledge Engineering & Communication</option>
-              <option value="SC">Scientific Computing</option>
-            </select>
-            <label>Department</label>
+          <div>
+            <label className="block mb-1 font-medium">Department</label>
+            <CustomSelect
+              name="department"
+              value={formData.department}
+              onChange={handleDepartmentChange}
+              placeholder="Select Department"
+              options={[]}
+            />
           </div>
 
-          <div className="prof-field">
-            <select name="subject" value={formData.subject} onChange={handleChange} className="prof-input">
-              <option value="">Select Subject</option>
-              {subjects && subjects.length > 0 ? (
-                subjects.map((s, idx) => (
-                  <option key={idx} value={s}>{s}</option>
-                ))
-              ) : null}
-            </select>
-            <label>Subject</label>
+          <div>
+            <label className="block mb-1 font-medium">Subject</label>
+            <CustomSelect
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              placeholder="Select Subject"
+              options={(subjects || []).map((s) => ({ value: s, label: s }))}
+            />
           </div>
 
-          <div className="prof-field">
-            <input placeholder=" " name="uniID" value={formData.uniID} onChange={handleChange} className="prof-input" />
-            <label>University ID Number</label>
+          <div>
+            <label className="block mb-1 font-medium">University ID Number</label>
+            <input name="uniID" value={formData.uniID} onChange={handleChange} className="prof-input" />
           </div>
 
-          <div className="prof-field">
-            <select name="designation" value={formData.designation} onChange={handleChange} className="prof-input">
-              <option value="Assistant Professor">Assistant Professor</option>
-              <option value="Associate Professor">Associate Professor</option>
-              <option value="Professor">Professor</option>
-              <option value="Instructor">Instructor</option>
-              <option value="Lecturer">Lecturer</option>
-            </select>
-            <label>Designation</label>
+          <div>
+            <label className="block mb-1 font-medium">Designation</label>
+            <CustomSelect
+              name="designation"
+              value={formData.designation}
+              onChange={handleChange}
+              placeholder="Select Designation"
+              options={[]}
+            />
           </div>
 
-          <div className="prof-field">
-            <input placeholder=" " name="contactNumber" value={formData.contactNumber} onChange={handleChange} className="prof-input" required />
-            <label>Contact Number</label>
+          <div>
+            <label className="block mb-1 font-medium">Contact Number</label>
+            <input name="contactNumber" value={formData.contactNumber} onChange={handleChange} className="prof-input" required />
           </div>
 
-          <div className="prof-field">
-            <input placeholder=" " type="date" name="dateofjoin" value={formData.dateofjoin} onChange={handleChange} className="prof-input" required />
-            <label>Date of Join</label>
+          <div>
+            <label className="block mb-1 font-medium">Date of Join</label>
+            <input type="date" name="dateofjoin" value={formData.dateofjoin} onChange={handleChange} className="prof-input" required />
           </div>
 
-          <div className="prof-field">
-            <input placeholder=" " name="address" value={formData.address} onChange={handleChange} className="prof-input" />
-            <label>Address</label>
+          <div>
+            <label className="block mb-1 font-medium">Address</label>
+            <input name="address" value={formData.address} onChange={handleChange} className="prof-input" />
           </div>
 
-          <div className="prof-field">
-            <input placeholder=" " type="email" name="email" value={formData.email} onChange={handleChange} className="prof-input" required />
-            <label>Email Address</label>
+          <div>
+            <label className="block mb-1 font-medium">Email Address</label>
+            <input type="email" name="email" value={formData.email} onChange={handleChange} className="prof-input" required />
           </div>
 
-          <div className="prof-field">
-            <input placeholder=" " name="nicNO" value={formData.nicNO} onChange={handleChange} className="prof-input" required />
-            <label>NIC Number</label>
+          <div>
+            <label className="block mb-1 font-medium">NIC Number</label>
+            <input name="nicNO" value={formData.nicNO} onChange={handleChange} className="prof-input" required />
           </div>
 
-          <div className="prof-field">
-            <select name="status" value={formData.status} onChange={handleChange} className="prof-input" required>
-              <option value="Active">Active</option>
-              <option value="On Leave">On Leave</option>
-              <option value="Retired">Retired</option>
-              <option value="Resigned">Resigned</option>
-            </select>
-            <label>Status</label>
+          <div>
+            <label className="block mb-1 font-medium">Status</label>
+            <CustomSelect
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              placeholder="Select Status"
+              options={[]}
+            />
           </div>
         </div>
 

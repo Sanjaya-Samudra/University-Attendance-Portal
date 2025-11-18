@@ -262,9 +262,6 @@ const ProfessorProfile = () => {
                   className="flex-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
                 >
                   <option value="">Select Department</option>
-                  <option value="SE">Software Engineering</option>
-                  <option value="CS">Computer Science</option>
-                  <option value="IS">Information System</option>
                 </select>
                 <button
                   type="button"
@@ -284,10 +281,7 @@ const ProfessorProfile = () => {
                 onChange={handleChange}
                 className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
               >
-                <option value="Assistant Professor">Assistant Professor</option>
-                <option value="Associate Professor">Associate Professor</option>
-                <option value="Professor">Professor</option>
-                <option value="Lecturer">Lecturer</option>
+                <option value="">Select Designation</option>
               </select>
             </div>
 

@@ -4,13 +4,8 @@ import { Link } from "react-router-dom";
 import {AppContext} from '../../context/AppContext.jsx'
 
 const ProfessorDashboard = () => {
-  // Mock data for demonstration
-  const [stats, setStats] = useState([
-    { title: "Total Students", value: "45", icon: "👥" },
-    { title: "Courses Teaching", value: "3", icon: "📚" },
-    { title: "Today's Attendance", value: "92%", icon: "📊" },
-    { title: "Pending Tasks", value: "2", icon: "📝" },
-  ])
+  // Stats will be fetched from backend
+  const [stats, setStats] = useState([])
 
   const navigationItems = [
     { path: "/create-qr-session", label: "Create QR Session", icon: "📱" },
@@ -21,11 +16,7 @@ const ProfessorDashboard = () => {
     { path: "/professor-profile", label: "Profile Update", icon: "👤" },
   ];
 
-  const [recentAttendance, setRecentAttendance] = useState([
-    { course: "CS101", students: 35, present: 32, date: "2025-10-12" },
-    { course: "SE201", students: 28, present: 26, date: "2025-10-12" },
-    { course: "IS301", students: 22, present: 21, date: "2025-10-11" },
-  ])
+  const [recentAttendance, setRecentAttendance] = useState([])
 
   const {backendUrl} = useContext(AppContext)
 

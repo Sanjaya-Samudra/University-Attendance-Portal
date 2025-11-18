@@ -481,9 +481,6 @@ const StudentProfile = () => {
                   required
                 >
                   <option value="">Select department</option>
-                  <option value="CS">Computer Science</option>
-                  <option value="SE">Software Enginerring</option>
-                  <option value="IS">Information System</option>
                 </select>
               </div>
 
@@ -500,14 +497,7 @@ const StudentProfile = () => {
                   className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
                   required
                 >
-                  <option value="1">1st Semester</option>
-                  <option value="2">2nd Semester</option>
-                  <option value="3">3rd Semester</option>
-                  <option value="4">4th Semester</option>
-                  <option value="5">5th Semester</option>
-                  <option value="6">6th Semester</option>
-                  <option value="7">7th Semester</option>
-                  <option value="8">8th Semester</option>
+                  <option value="">Select Semester</option>
                 </select>
               </div>
 

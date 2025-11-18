@@ -53,77 +53,7 @@ const ViewAttendance = () => {
 
     try {
 
-      // Mock attendance data
-      const mockData = [
-        {
-          id: "CS101",
-          name: "Introduction to Programming",
-          instructor: "Dr. John Smith",
-          totalClasses: 24,
-          attendedClasses: 22,
-          attendancePercentage: 91.7,
-          status: "Good",
-          lastAttendance: "2024-01-15",
-          attendanceRecords: [
-            { date: "2024-01-15", status: "Present", time: "09:00 AM" },
-            { date: "2024-01-12", status: "Present", time: "09:00 AM" },
-            { date: "2024-01-10", status: "Present", time: "09:00 AM" },
-            { date: "2024-01-08", status: "Absent", time: "-" },
-            { date: "2024-01-05", status: "Present", time: "09:00 AM" },
-          ],
-        },
-        {
-          id: "CS201",
-          name: "Data Structures",
-          instructor: "Prof. Jane Doe",
-          totalClasses: 20,
-          attendedClasses: 16,
-          attendancePercentage: 80.0,
-          status: "Average",
-          lastAttendance: "2024-01-14",
-          attendanceRecords: [
-            { date: "2024-01-14", status: "Present", time: "10:30 AM" },
-            { date: "2024-01-11", status: "Present", time: "10:30 AM" },
-            { date: "2024-01-09", status: "Late", time: "11:00 AM" },
-            { date: "2024-01-07", status: "Absent", time: "-" },
-            { date: "2024-01-04", status: "Present", time: "10:30 AM" },
-          ],
-        },
-        {
-          id: "CS301",
-          name: "Algorithms",
-          instructor: "Dr. Bob Wilson",
-          totalClasses: 18,
-          attendedClasses: 13,
-          attendancePercentage: 72.2,
-          status: "Low",
-          lastAttendance: "2024-01-13",
-          attendanceRecords: [
-            { date: "2024-01-13", status: "Present", time: "02:00 PM" },
-            { date: "2024-01-11", status: "Present", time: "02:00 PM" },
-            { date: "2024-01-09", status: "Absent", time: "-" },
-            { date: "2024-01-06", status: "Late", time: "02:30 PM" },
-            { date: "2024-01-04", status: "Present", time: "02:00 PM" },
-          ],
-        },
-        {
-          id: "MATH101",
-          name: "Discrete Mathematics",
-          instructor: "Prof. Alice Brown",
-          totalClasses: 22,
-          attendedClasses: 20,
-          attendancePercentage: 90.9,
-          status: "Good",
-          lastAttendance: "2024-01-15",
-          attendanceRecords: [
-            { date: "2024-01-15", status: "Present", time: "11:00 AM" },
-            { date: "2024-01-13", status: "Present", time: "11:00 AM" },
-            { date: "2024-01-10", status: "Present", time: "11:00 AM" },
-            { date: "2024-01-08", status: "Present", time: "11:00 AM" },
-            { date: "2024-01-06", status: "Absent", time: "-" },
-          ],
-        },
-      ];
+      // Attendance data will be loaded from backend; remove mock/demo entries
 
       axios.defaults.withCredentials = true
 

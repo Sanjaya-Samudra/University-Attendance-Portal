@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AppContext } from "../../context/AppContext";
 import "../../styles/student-management.css";
+import CustomSelect from '../../components/CustomSelect.jsx'
 
 const StudentManagement = () => {
 
@@ -128,65 +129,67 @@ const StudentManagement = () => {
       {/* Form */}
       <form onSubmit={handleSubmit} className="student-form-card mb-6">
         <div className="student-form-grid">
-          <div className="field">
-            <input placeholder=" " name="full_name" value={formData.full_name} onChange={handleChange} className="student-input" required />
-            <label>Full Name</label>
+          <div>
+            <label className="block mb-1 font-medium">Full Name</label>
+            <input name="full_name" value={formData.full_name} onChange={handleChange} className="student-input" required />
           </div>
 
-          <div className="field">
-            <input placeholder=" " name="index_num" value={formData.index_num} onChange={handleChange} className="student-input" required />
-            <label>Index Number</label>
+          <div>
+            <label className="block mb-1 font-medium">Index Number</label>
+            <input name="index_num" value={formData.index_num} onChange={handleChange} className="student-input" required />
           </div>
 
-          <div className="field">
-            <input placeholder=" " name="regi_num" value={formData.regi_num} onChange={handleChange} className="student-input" required />
-            <label>Registration Number</label>
+          <div>
+            <label className="block mb-1 font-medium">Registration Number</label>
+            <input name="regi_num" value={formData.regi_num} onChange={handleChange} className="student-input" required />
           </div>
 
-          <div className="field">
-            <select name="dep_id" value={formData.dep_id} onChange={handleChange} className="student-input" required>
-              <option value="">Select Department</option>
-              <option value="CS">Computer Science</option>
-              <option value="SE">Software Engineering</option>
-              <option value="IS">Information Systems</option>
-            </select>
-            <label>Department</label>
+          <div>
+            <label className="block mb-1 font-medium">Department</label>
+            <CustomSelect
+              name="dep_id"
+              value={formData.dep_id}
+              onChange={handleChange}
+              placeholder="Select Department"
+              options={[]}
+            />
           </div>
 
-          <div className="field">
-            <select name="academicYear" value={formData.academicYear} onChange={handleChange} className="student-input" required>
-              <option value="">Select Academic Year</option>
-              <option value={1}>1st Year</option>
-              <option value={2}>2nd Year</option>
-              <option value={3}>3rd Year</option>
-              <option value={4}>4th Year</option>
-            </select>
-            <label>Academic Year</label>
+          <div>
+            <label className="block mb-1 font-medium">Academic Year</label>
+            <CustomSelect
+              name="academicYear"
+              value={formData.academicYear}
+              onChange={handleChange}
+              placeholder="Select Academic Year"
+              options={[]}
+            />
           </div>
 
-          <div className="field">
-            <select name="year" value={formData.year} onChange={handleChange} className="student-input" required>
-              <option value="">Select Year</option>
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-            </select>
-            <label>Year</label>
+          <div>
+            <label className="block mb-1 font-medium">Year</label>
+            <CustomSelect
+              name="year"
+              value={formData.year}
+              onChange={handleChange}
+              placeholder="Select Year"
+              options={[]}
+            />
           </div>
 
-          <div className="field">
-            <input placeholder=" " type="email" name="email" value={formData.email} onChange={handleChange} className="student-input" required />
-            <label>Email</label>
+          <div>
+            <label className="block mb-1 font-medium">Email</label>
+            <input type="email" name="email" value={formData.email} onChange={handleChange} className="student-input" required />
           </div>
 
-          <div className="field">
-            <input placeholder=" " name="contact_num" value={formData.contact_num} onChange={handleChange} className="student-input" required />
-            <label>Contact Number</label>
+          <div>
+            <label className="block mb-1 font-medium">Contact Number</label>
+            <input name="contact_num" value={formData.contact_num} onChange={handleChange} className="student-input" required />
           </div>
 
-          <div className="field">
-            <input placeholder=" " name="address" value={formData.address} onChange={handleChange} className="student-input" required />
-            <label>Address</label>
+          <div>
+            <label className="block mb-1 font-medium">Address</label>
+            <input name="address" value={formData.address} onChange={handleChange} className="student-input" required />
           </div>
         </div>
 

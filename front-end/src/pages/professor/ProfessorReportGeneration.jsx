@@ -23,13 +23,8 @@ const ProfessorReportGeneration = () => {
   }, []);
 
   const loadProfessorCourses = () => {
-    // Mock data - replace with actual API call
-    setCourses([
-      { id: "CS101", name: "Introduction to Programming" },
-      { id: "CS201", name: "Data Structures" },
-      { id: "CS301", name: "Algorithms" },
-      { id: "CS401", name: "Software Engineering" },
-    ]);
+    // Courses will be loaded from backend; leave empty for now
+    setCourses([]);
   };
 
   const handleInputChange = (e) => {
@@ -50,67 +45,12 @@ const ProfessorReportGeneration = () => {
     setError("");
 
     try {
-      // Mock API call - replace with actual API
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Removed demo data. Replace this block with a real API call to fetch report data.
+      // Example:
+      // const {data} = await axios.post('/professor/report', formData)
+      // setReportData(data.message)
 
-      // Mock report data
-      const mockReportData = {
-        summary: {
-          totalStudents: 45,
-          avgAttendance: 78.5,
-          totalClasses: 24,
-          dateRange: 30,
-        },
-        students: [
-          {
-            id: "ST001",
-            name: "Alice Johnson",
-            email: "alice.johnson@university.edu",
-            attendancePercentage: 95,
-            presentDays: 23,
-            absentDays: 1,
-            lateArrivals: 0,
-          },
-          {
-            id: "ST002",
-            name: "Bob Smith",
-            email: "bob.smith@university.edu",
-            attendancePercentage: 87,
-            presentDays: 21,
-            absentDays: 3,
-            lateArrivals: 1,
-          },
-          {
-            id: "ST003",
-            name: "Carol Davis",
-            email: "carol.davis@university.edu",
-            attendancePercentage: 92,
-            presentDays: 22,
-            absentDays: 2,
-            lateArrivals: 0,
-          },
-          {
-            id: "ST004",
-            name: "David Wilson",
-            email: "david.wilson@university.edu",
-            attendancePercentage: 76,
-            presentDays: 18,
-            absentDays: 6,
-            lateArrivals: 2,
-          },
-          {
-            id: "ST005",
-            name: "Eva Brown",
-            email: "eva.brown@university.edu",
-            attendancePercentage: 83,
-            presentDays: 20,
-            absentDays: 4,
-            lateArrivals: 1,
-          },
-        ],
-      };
-
-      setReportData(mockReportData);
+      setReportData(null);
     } catch {
       setError("Failed to generate report. Please try again.");
     } finally {
@@ -175,10 +115,6 @@ const ProfessorReportGeneration = () => {
               required
             >
               <option value="">Select Year</option>
-              <option value="1">Year 1</option>
-              <option value="2">Year 2</option>
-              <option value="3">Year 3</option>
-              <option value="4">Year 4</option>
             </select>
           </div>
 
@@ -192,8 +128,6 @@ const ProfessorReportGeneration = () => {
               required
             >
               <option value="">Select Semester</option>
-              <option value="1">Semester 1</option>
-              <option value="2">Semester 2</option>
             </select>
           </div>
 

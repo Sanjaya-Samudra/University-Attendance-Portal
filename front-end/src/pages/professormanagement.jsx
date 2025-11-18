@@ -93,9 +93,6 @@ const ProfessorForm = () => {
               className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <option value="">Select Department</option>
-              <option value="CS">Computer Science</option>
-              <option value="SE">Software Engineering</option>
-              <option value="IS">Information Systems</option>
             </select>
           </div>
 

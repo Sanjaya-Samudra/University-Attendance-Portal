@@ -45,71 +45,8 @@ const StudentNotifications = () => {
       // Mock API call - replace with actual API
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Mock notifications data for students
-      const mockNotifications = [
-        {
-          id: 1,
-          type: "attendance",
-          title: "Attendance Reminder",
-          message: "You have 2 consecutive absences in CS101. Please attend the next class.",
-          timestamp: "2024-01-15T10:30:00Z",
-          isRead: false,
-          isImportant: true,
-          courseId: "CS101",
-        },
-        {
-          id: 2,
-          type: "academic",
-          title: "Grade Posted",
-          message: "Your grade for the SE201 midterm exam has been posted. Score: 85/100",
-          timestamp: "2024-01-14T14:20:00Z",
-          isRead: false,
-          isImportant: false,
-          courseId: "SE201",
-        },
-        {
-          id: 3,
-          type: "system",
-          title: "Schedule Change",
-          message: "IS301 class on Friday has been moved to Room 205.",
-          timestamp: "2024-01-13T16:45:00Z",
-          isRead: true,
-          isImportant: false,
-          courseId: "IS301",
-        },
-        {
-          id: 4,
-          type: "important",
-          title: "Registration Deadline",
-          message: "Course registration for Semester 2 closes on January 25th. Don't miss out!",
-          timestamp: "2024-01-12T09:00:00Z",
-          isRead: false,
-          isImportant: true,
-          courseId: null,
-        },
-        {
-          id: 5,
-          type: "attendance",
-          title: "Perfect Attendance",
-          message: "Congratulations! You have achieved 100% attendance in MATH101 this month.",
-          timestamp: "2024-01-11T11:15:00Z",
-          isRead: true,
-          isImportant: false,
-          courseId: "MATH101",
-        },
-        {
-          id: 6,
-          type: "academic",
-          title: "Assignment Due",
-          message: "CS401 project proposal is due tomorrow. Please submit before 11:59 PM.",
-          timestamp: "2024-01-10T08:30:00Z",
-          isRead: false,
-          isImportant: true,
-          courseId: "CS401",
-        },
-      ];
-
-      setNotifications(mockNotifications);
+      // notifications will be loaded from backend; remove demo entries
+      setNotifications([]);
     } catch {
       setError("Failed to load notifications. Please try again.");
     } finally {
