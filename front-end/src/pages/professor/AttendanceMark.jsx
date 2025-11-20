@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { toast } from "react-toastify";
+import CustomSelect from '../../components/CustomSelect'
+import '../../styles/admin-user-management.css'
+import '../../styles/report-generation.css'
 
 const AttendanceMark = () => {
   const [courses, setCourses] = useState([]);
@@ -144,69 +147,67 @@ const AttendanceMark = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="aum-container">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-purple-700 flex items-center">
-          <i className="fas fa-user-check mr-2"></i>
-          Mark Attendance
-        </h1>
+      <div className="aum-header" style={{marginBottom:12}}>
+        <div>
+          <div className="aum-title"><i className="fas fa-user-check mr-2"></i>Mark Attendance</div>
+          <div className="aum-sub">Record student attendance for your sessions</div>
+        </div>
         <div className="flex items-center gap-3">
-          <img
-            src="/user.jpg"
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-          <span className="font-medium">Professor</span>
+          <div className="text-right">
+            <div className="text-sm text-gray-500">Welcome back,</div>
+            <div className="font-medium text-[var(--foc-navy)]">Professor</div>
+          </div>
+          <img src="/user.jpg" alt="Profile" className="w-12 h-12 rounded-full object-cover border-2 border-[var(--foc-navy)]" />
         </div>
       </div>
 
       {/* Messages */}
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-          <i className="fas fa-exclamation-triangle mr-2"></i>
-          {error}
+        <div className="aum-card" style={{borderLeft:'4px solid #ef4444', marginBottom:12}}>
+          <div className="text-red-700">{error}</div>
         </div>
       )}
 
       {success && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
-          <i className="fas fa-check-circle mr-2"></i>
-          {success}
+        <div className="aum-card" style={{borderLeft:'4px solid #10b981', marginBottom:12}}>
+          <div className="text-green-700">{success}</div>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
+      <form onSubmit={handleSubmit} className="aum-card">
         {/* Course Selection */}
         <div className="mb-6">
-          <label className="block mb-2 font-medium text-gray-700">
+          <label className="aum-label">
             <i className="fas fa-book mr-1"></i>
             Select Course *
           </label>
-          <select
-            value={selectedCourse}
-            onChange={(e) => setSelectedCourse(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-            required
-          >
-            <option value="">Choose a course...</option>
-            {courses.map(course => (
-              <option key={course.id} value={course._id}>
-                {course.courseCode} - {course.title} ({course.date})
-              </option>
-            ))}
-          </select>
+          {
+            (() => {
+              const courseOptions = courses.map(c => ({ value: c._id || c.id, label: `${c.courseCode ?? c.code ?? ''} ${c.title ?? c.name} ${c.date ? `(${c.date})` : ''}` }))
+              return (
+                <CustomSelect
+                  name="selectedCourse"
+                  value={selectedCourse}
+                  onChange={(e) => setSelectedCourse(e.target.value)}
+                  options={courseOptions}
+                  placeholder="Choose a course..."
+                />
+              )
+            })()
+          }
         </div>
 
         {/* Bulk Actions */}
         {students.length > 0 && (
           <div className="mb-6">
-            <label className="block mb-2 font-medium text-gray-700">Bulk Actions</label>
+            <label className="aum-label">Bulk Actions</label>
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={markAllPresent}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                className="aum-btn-primary"
               >
                 <i className="fas fa-check mr-2"></i>
                 Mark All Present
@@ -214,7 +215,8 @@ const AttendanceMark = () => {
               <button
                 type="button"
                 onClick={markAllAbsent}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                className="aum-btn-ghost"
+                style={{borderColor:'rgba(239,68,68,0.08)', color:'#ef4444'}}
               >
                 <i className="fas fa-times mr-2"></i>
                 Mark All Absent
@@ -226,8 +228,8 @@ const AttendanceMark = () => {
         {/* Students List */}
         {students.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-purple-700 mb-4">
-              Mark Attendance for {courses.find(c => c.id === selectedCourse)?.name}
+            <h3 className="text-lg font-semibold text-[var(--foc-navy)] mb-4">
+              Mark Attendance for {courses.find(c => (c._id || c.id) === selectedCourse)?.title || courses.find(c => (c._id || c.id) === selectedCourse)?.name}
             </h3>
             <div className="space-y-3 max-h-96 overflow-y-auto">
               {students.map(student => (
@@ -244,18 +246,27 @@ const AttendanceMark = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    {
-                      <button
-                        key={student.status}
-                        type="button"
-                        onClick={() => handleAttendanceChange(student.studentId, student.status)}
-                        className={`px-3 py-1 rounded text-sm font-medium capitalize transition ${
-                          getStatusColor(student.status)
-                        }`}
-                      >
-                        {student.status}
-                      </button>
-                    }
+                    <button
+                      type="button"
+                      onClick={() => handleAttendanceChange(student.studentId._id, 'present')}
+                      className={`px-3 py-1 rounded text-sm font-medium capitalize transition ${getStatusColor(attendanceData[student.studentId._id] || student.status)}`}
+                    >
+                      Present
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleAttendanceChange(student.studentId._id, 'absent')}
+                      className={`px-3 py-1 rounded text-sm font-medium capitalize transition ${getStatusColor(attendanceData[student.studentId._id] || student.status)}`}
+                    >
+                      Absent
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleAttendanceChange(student.studentId._id, 'late')}
+                      className={`px-3 py-1 rounded text-sm font-medium capitalize transition ${getStatusColor(attendanceData[student.studentId._id] || student.status)}`}
+                    >
+                      Late
+                    </button>
                   </div>
                 </div>
               ))}
@@ -269,7 +280,7 @@ const AttendanceMark = () => {
             <button
               type="submit"
               disabled={loading}
-              className="bg-purple-600 text-white px-8 py-3 rounded hover:bg-purple-700 transition disabled:bg-purple-400"
+              className="aum-btn-primary"
             >
               {loading ? (
                 <>

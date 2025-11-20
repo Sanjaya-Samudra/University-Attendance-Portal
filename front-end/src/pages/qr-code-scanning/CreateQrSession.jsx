@@ -130,7 +130,13 @@ const CreateQrSession = () => {
           <div className="aum-title">Create Attendance Session</div>
           <div className="aum-sub">Generate QR codes for student attendance</div>
         </div>
-        <div className="aum-badge">Professor</div>
+        <div className="flex items-center gap-3">
+          <div className="text-right">
+            <div className="text-sm text-gray-500">Welcome back,</div>
+            <div className="font-medium text-[var(--foc-navy)]">Professor</div>
+          </div>
+          <img src="/user.jpg" alt="Profile" className="w-12 h-12 rounded-full object-cover border-2 border-[var(--foc-navy)]" />
+        </div>
       </div>
 
       <div className="aum-grid">
