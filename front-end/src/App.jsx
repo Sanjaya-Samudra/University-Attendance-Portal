@@ -17,7 +17,6 @@ import AdminUserManagement from "./pages/admin/AdminUserManagement";
 import CourseUnitManagement from "./pages/admin/CourseUnitManagement";
 import AdminProfessorManagement from "./pages/admin/ProfessorManagement";
 import ReportGeneration from "./pages/admin/ReportGeneration";
-import ProfessorCourseManagement from "./pages/professor/CourseManagement";
 import ProfessorNotification from "./pages/professor/ProfessorNotification";
 import ProfessorProfile from "./pages/professor/ProfessorProfile";
 import ProfessorReportGeneration from "./pages/professor/ProfessorReportGeneration";
@@ -233,14 +232,7 @@ function App() {
             </ProfessorLayout>
           }
         />
-        <Route
-          path="/professor-course-management"
-          element={
-            <ProfessorLayout>
-              <ProfessorCourseManagement />
-            </ProfessorLayout>
-          }
-        />
+        {/* Professor course management removed from professor routes (admin retains CourseUnitManagement) */}
         <Route
           path="/professor-notifications"
           element={

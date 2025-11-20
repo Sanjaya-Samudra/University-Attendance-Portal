@@ -12,7 +12,6 @@ const ProfessorDashboard = () => {
     { path: "/create-qr-session", label: "Create QR Session", icon: "📱" },
     { path: "/attendance-mark", label: "Attendance Mark", icon: "📝" },
     { path: "/professor-report-generation", label: "Report Generation", icon: "📊" },
-    { path: "/professor-course-management", label: "Course Unit Management", icon: "📚" },
     { path: "/professor/student-notifications", label: "Notification Panel", icon: "🔔" },
     { path: "/professor-profile", label: "Profile Update", icon: "👤" },
   ];

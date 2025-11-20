@@ -16,12 +16,7 @@ function ProfessorSidebar() {
           </span>
           <span className="font-medium">Create QR Session</span>
         </Link>
-        <Link to="/professor-course-management" className="sidebar-item flex items-center gap-3 p-3 rounded-lg hover:bg-purple-50 transition-colors duration-200 hover:shadow-sm text-gray-700 hover:text-purple-700">
-          <span className="sidebar-icon transition-transform duration-200">
-            <i data-feather="book" className="w-5 h-5"></i>
-          </span>
-          <span className="font-medium">Course Management</span>
-        </Link>
+        {/* Course Management removed for professor users */}
         <Link to="/attendance-mark" className="sidebar-item flex items-center gap-3 p-3 rounded-lg hover:bg-purple-50 transition-colors duration-200 hover:shadow-sm text-gray-700 hover:text-purple-700">
           <span className="sidebar-icon transition-transform duration-200">
             <i data-feather="check-circle" className="w-5 h-5"></i>
