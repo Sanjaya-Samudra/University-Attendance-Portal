@@ -81,18 +81,19 @@ const StudentNotifications = () => {
     }
   };
 
-  const getNotificationColor = (type) => {
+  const getNotificationStyle = (type) => {
+    // Return inline style fragments matching FoC theme (navy/gold/soft)
     switch (type) {
       case "attendance":
-        return "border-l-blue-500";
+        return { borderColor: 'rgba(0,33,71,0.12)', iconColor: 'var(--foc-navy)' };
       case "academic":
-        return "border-l-green-500";
+        return { borderColor: 'rgba(255,209,0,0.12)', iconColor: 'var(--foc-gold)' };
       case "system":
-        return "border-l-gray-500";
+        return { borderColor: 'rgba(107,114,128,0.12)', iconColor: '#6b7280' };
       case "important":
-        return "border-l-red-500";
+        return { borderColor: 'rgba(239,68,68,0.12)', iconColor: '#ef4444' };
       default:
-        return "border-l-purple-500";
+        return { borderColor: 'rgba(0,33,71,0.08)', iconColor: 'var(--foc-navy)' };
     }
   };
 
@@ -115,68 +116,52 @@ const StudentNotifications = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="aum-container" style={{minHeight: '100vh', padding:'24px'}}>
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-purple-700 flex items-center">
-          <i className="fas fa-bell mr-2"></i>
-          My Notifications
-        </h1>
-        <div className="flex items-center gap-3">
-          <img
-            src="/user.jpg"
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-          <span className="font-medium">Student</span>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:18}}>
+        <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <i className="fas fa-bell" style={{color:'var(--foc-navy)',fontSize:22}}></i>
+          <h1 className="aum-title">My Notifications</h1>
+        </div>
+        <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <img src="/user.jpg" alt="Profile" className="profile-avatar" style={{width:40,height:40}} />
+          <span className="muted">Student</span>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-4 mb-6">
-        <button
-          onClick={markAllAsRead}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-        >
+      <div style={{display:'flex',gap:12,marginBottom:18}}>
+        <button onClick={markAllAsRead} className="aum-btn-ghost">
           <i className="fas fa-check-double mr-2"></i>
           Mark All Read
         </button>
-        <button
-          onClick={loadNotifications}
-          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
-        >
+        <button onClick={loadNotifications} className="aum-btn-primary">
           <i className="fas fa-sync-alt mr-2"></i>
           Refresh
         </button>
       </div>
 
       {/* Notification Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-blue-50 p-4 rounded text-center">
-          <div className="flex items-center justify-center mb-2">
-            <i className="fas fa-bell text-blue-500 text-2xl"></i>
-          </div>
-          <div className="text-2xl font-bold text-blue-600">{stats.total}</div>
-          <div className="text-sm text-gray-600">Total Notifications</div>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12,marginBottom:18}}>
+        <div className="aum-card" style={{textAlign:'center'}}>
+          <div style={{fontSize:20,color:'var(--foc-navy)',marginBottom:6}}><i className="fas fa-bell"></i></div>
+          <div className="aum-kpi-value">{stats.total}</div>
+          <div className="muted">Total Notifications</div>
         </div>
-        <div className="bg-red-50 p-4 rounded text-center">
-          <div className="flex items-center justify-center mb-2">
-            <i className="fas fa-envelope text-red-500 text-2xl"></i>
-          </div>
-          <div className="text-2xl font-bold text-red-600">{stats.unread}</div>
-          <div className="text-sm text-gray-600">Unread</div>
+        <div className="aum-card" style={{textAlign:'center'}}>
+          <div style={{fontSize:20,color:'#ef4444',marginBottom:6}}><i className="fas fa-envelope"></i></div>
+          <div className="aum-kpi-value">{stats.unread}</div>
+          <div className="muted">Unread</div>
         </div>
-        <div className="bg-yellow-50 p-4 rounded text-center">
-          <div className="flex items-center justify-center mb-2">
-            <i className="fas fa-exclamation-triangle text-yellow-500 text-2xl"></i>
-          </div>
-          <div className="text-2xl font-bold text-yellow-600">{stats.important}</div>
-          <div className="text-sm text-gray-600">Important</div>
+        <div className="aum-card" style={{textAlign:'center'}}>
+          <div style={{fontSize:20,color:'var(--foc-gold)',marginBottom:6}}><i className="fas fa-exclamation-triangle"></i></div>
+          <div className="aum-kpi-value">{stats.important}</div>
+          <div className="muted">Important</div>
         </div>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap gap-2 mb-6 bg-white p-4 rounded shadow">
+      <div className="aum-card" style={{display:'flex',flexWrap:'wrap',gap:8,marginBottom:18}}>
         {[
           { key: "all", label: "All Notifications", icon: "fas fa-list" },
           { key: "unread", label: "Unread", icon: "fas fa-envelope" },
@@ -188,13 +173,9 @@ const StudentNotifications = () => {
           <button
             key={tab.key}
             onClick={() => setActiveFilter(tab.key)}
-            className={`px-4 py-2 rounded flex items-center gap-2 transition ${
-              activeFilter === tab.key
-                ? "bg-purple-600 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
+            className={activeFilter === tab.key ? 'aum-btn-primary' : 'aum-btn-ghost'}
           >
-            <i className={tab.icon}></i>
+            <i className={tab.icon} style={{marginRight:8}}></i>
             {tab.label}
           </button>
         ))}
@@ -202,64 +183,62 @@ const StudentNotifications = () => {
 
       {/* Loading Spinner */}
       {loading && (
-        <div className="text-center py-8">
-          <i className="fas fa-spinner fa-spin text-2xl text-purple-600"></i>
-          <p className="mt-2 text-gray-600">Loading notifications...</p>
+        <div style={{textAlign:'center',padding:'40px 0'}}>
+          <i className="fas fa-spinner fa-spin" style={{fontSize:22,color:'var(--foc-navy)'}}></i>
+          <p className="muted" style={{marginTop:8}}>Loading notifications...</p>
         </div>
       )}
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-          <i className="fas fa-exclamation-triangle mr-2"></i>
+        <div className="aum-card" style={{borderLeft:'4px solid #ef4444',marginBottom:18}}>
+          <i className="fas fa-exclamation-triangle" style={{marginRight:8}}></i>
           {error}
         </div>
       )}
 
       {/* Notifications List */}
       {!loading && !error && (
-        <div className="space-y-4">
+        <div style={{display:'flex',flexDirection:'column',gap:12}}>
           {filteredNotifications.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <i className="fas fa-bell-slash text-4xl mb-4"></i>
+            <div style={{textAlign:'center',padding:'48px 0'}} className="muted">
+              <i className="fas fa-bell-slash" style={{fontSize:36,display:'block',marginBottom:10,color:'var(--foc-navy)'}}></i>
               <p>No notifications found.</p>
             </div>
           ) : (
-            filteredNotifications.map(notification => (
-              <div
-                key={notification.id}
-                onClick={() => markAsRead(notification.id)}
-                className={`bg-white p-4 rounded shadow cursor-pointer hover:shadow-md transition border-l-4 ${
-                  getNotificationColor(notification.type)
-                } ${!notification.isRead ? "bg-blue-50" : ""}`}
-              >
-                <div className="flex items-start gap-3">
-                  <i className={`${getNotificationIcon(notification.type)} text-xl mt-1 ${
-                    notification.isImportant ? "text-red-500" : "text-gray-500"
-                  }`}></i>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-gray-800">{notification.title}</h3>
+            filteredNotifications.map(notification => {
+              const style = getNotificationStyle(notification.type);
+              return (
+                <div
+                  key={notification.id}
+                  onClick={() => markAsRead(notification.id)}
+                  className="aum-card"
+                  style={{cursor:'pointer',display:'flex',gap:12,alignItems:'flex-start',borderLeft:`4px solid ${style.borderColor}`,background:!notification.isRead ? 'rgba(0,33,71,0.03)' : 'transparent'}}
+                >
+                  <div style={{fontSize:18,color: notification.isImportant ? '#ef4444' : style.iconColor,marginTop:4}}>
+                    <i className={`${getNotificationIcon(notification.type)}`}></i>
+                  </div>
+                  <div style={{flex:1}}>
+                    <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:6}}>
+                      <h3 className="aum-list-title">{notification.title}</h3>
                       {notification.isImportant && (
-                        <i className="fas fa-star text-red-500"></i>
+                        <span className="aum-badge" style={{background:'#fee2e2',color:'#ef4444'}}>Important</span>
                       )}
                       {!notification.isRead && (
-                        <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">New</span>
+                        <span className="aum-badge" style={{background:'var(--foc-navy)',color:'#fff'}}>New</span>
                       )}
                     </div>
-                    <p className="text-gray-600 text-sm mb-2">{notification.message}</p>
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
+                    <p className="muted" style={{marginBottom:8}}>{notification.message}</p>
+                    <div style={{display:'flex',gap:12,alignItems:'center'}} className="muted">
                       <span>{formatTimestamp(notification.timestamp)}</span>
                       {notification.courseId && (
-                        <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded">
-                          {notification.courseId}
-                        </span>
+                        <span className="aum-badge" style={{background:'rgba(0,33,71,0.06)',color:'var(--foc-navy)'}}>{notification.courseId}</span>
                       )}
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       )}
