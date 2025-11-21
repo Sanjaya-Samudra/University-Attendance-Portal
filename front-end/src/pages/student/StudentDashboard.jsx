@@ -1,169 +1,175 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppContext } from "../../context/AppContext";
+import '../../styles/admin-user-management.css'
 
 const StudentDashboard = () => {
-  // Mock data for demonstration
-  const [stats, setStats] = useState([
-    { title: "Attendance Rate", value: "85%", icon: "📊" },
-    { title: "Total Classes", value: "120", icon: "📚" },
-    { title: "Present Days", value: "102", icon: "✅" },
-    { title: "Absent Days", value: "18", icon: "❌" },
-  ]);
+  const [stats, setStats] = useState([]);
+  const [studentInfo, setStudentInfo] = useState({ name: '', dept: '', avatar: '/user.jpg', courses: 0 });
 
   const [recentAttendance, setRecentAttendance] = useState([]);
 
-  const navigationItems = [
-    { path: "/view-attendance", label: "View Attendance", icon: "📊" },
-    { path: "/student-notifications", label: "Notification Panel", icon: "🔔" },
-    { path: "/student-profile", label: "Update Your Profile", icon: "👤" },
-  ];
+  // navigation items removed (not used in this layout)
 
-  const {backendUrl} = useContext(AppContext)
+  const { backendUrl } = useContext(AppContext);
 
   const getTheData = async () => {
     try {
-      
-      axios.defaults.withCredentials = true
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.get(backendUrl + '/student/dashboard');
+      if (data.success) {
+        const newStats = [];
+        if (data.message?.attendanceRate) newStats.push({ title: 'Attendance Rate', value: data.message.attendanceRate, icon: '📊' });
+        if (data.message?.totalClasses) newStats.push({ title: 'Total Classes', value: String(data.message.totalClasses), icon: '📚' });
+        if (data.message?.presentDays) newStats.push({ title: 'Present Days', value: String(data.message.presentDays), icon: '✅' });
+        if (data.message?.absentDays) newStats.push({ title: 'Absent Days', value: String(data.message.absentDays), icon: '❌' });
+        setStats(newStats);
 
-      const {data} = await axios.get(backendUrl + '/student/dashboard')
+        setRecentAttendance(data.message.recentAttendance || []);
 
-      if(data.success) {
-        setStats([
-          { title: "Attendance Rate", value: data.message.attendanceRate, icon: "📊" },
-          { title: "Total Classes", value: data.message.totalClasses, icon: "📚" },
-          { title: "Present Days", value: data.message.presentDays, icon: "✅" },
-          { title: "Absent Days", value: data.message.absentDays, icon: "❌" },
-        ])
-
-        setRecentAttendance(data.message.recentAttendance)
-        console.log(data.message.recentAttendance)
-      }else{
-        toast.error(data.message)
+        // populate student info if available
+        const student = data.message.student || data.message.profile || {};
+        setStudentInfo({
+          name: student.name || student.fullName || data.message.studentName || '',
+          dept: student.department || student.dept || data.message.department || '',
+          avatar: student.avatar || student.photo || data.message.avatar || '/user.jpg',
+          courses: data.message.courseCount || student.courseCount || student.courses || 0,
+        });
+      } else {
+        toast.error(data.message || 'Failed to load dashboard');
       }
-      
     } catch (error) {
-      toast.error(error.message)
-      console.log(error)
+      toast.error(error.message || 'Failed to load dashboard');
+      console.error(error);
     }
-  } 
-
-  const navigate = useNavigate()
+  };
 
   useEffect(() => {
-    getTheData()
-  },[])
+    getTheData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // derive numeric attendance for progress bar
+  const attendancePercent = (() => {
+    const raw = stats[0]?.value ?? '';
+    const n = parseInt(String(raw).replace('%',''));
+    return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 0;
+  })();
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6" onClick={() => navigate('/qr-loading')}>
-        <h1 className="text-3xl font-bold text-purple-700">Student Dashboard</h1>
-        <div className="flex items-center gap-3">
-          <img
-            src="/user.jpg"
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-          <span className="font-medium">Student</span>
+    <div className="aum-container">
+      <style>{` 
+        .sd-layout{ display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 900px) { .sd-layout{ grid-template-columns: 1fr 320px; align-items:start } }
+        .kpi-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:16px }
+      `}</style>
+      <div className="aum-header">
+        <div>
+          <div className="aum-title">Student Dashboard</div>
+          <div className="aum-sub">Faculty of Computing — Student panel</div>
+        </div>
+        <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <div style={{textAlign:'right'}} className="muted">
+            <div style={{fontSize:12}}>Welcome back,</div>
+            <div style={{fontWeight:700,color:'var(--foc-navy)'}}>Student</div>
+          </div>
+          <img src="/user.jpg" alt="profile" className="profile-avatar" style={{width:48,height:48}} />
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat, index) => (
-          <div key={index} className="bg-white p-6 shadow-md rounded flex items-center">
-            <div className="text-4xl mr-4">{stat.icon}</div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-700">{stat.title}</h3>
-              <p className="text-2xl font-bold text-purple-700">{stat.value}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Navigation Cards */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold text-purple-700 mb-4">Student Tools</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {navigationItems.map((item, index) => (
-            <Link
-              key={index}
-              to={item.path}
-              className="bg-white p-6 shadow-md rounded hover:shadow-lg transition transform hover:-translate-y-1"
-            >
-              <div className="flex items-center">
-                <div className="text-3xl mr-4">{item.icon}</div>
+      <div className="sd-layout">
+        {/* Main column */}
+        <div>
+          <div className="kpi-grid" style={{marginBottom:18}}>
+            {stats.map((s, i) => (
+              <div key={i} className="aum-card" style={{padding:14,display:'flex',gap:12,alignItems:'center'}}>
+                <div style={{width:48,height:48,display:'flex',alignItems:'center',justifyContent:'center',borderRadius:10,background:'rgba(0,33,71,0.06)',color:'var(--foc-navy)',fontSize:18}}>{s.icon}</div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">{item.label}</h3>
-                  <p className="text-sm text-gray-600">Click to access</p>
+                  <div style={{fontSize:12,fontWeight:700,color:'var(--foc-muted)'}}>{s.title}</div>
+                  <div style={{fontSize:18,fontWeight:800,color:'var(--foc-navy)'}}>{s.value}</div>
                 </div>
               </div>
-            </Link>
-          ))}
-        </div>
-      </div>
+            ))}
+          </div>
 
-      {/* Recent Attendance */}
-      <div className="bg-white p-6 shadow-md rounded mb-6">
-        <h2 className="text-xl font-bold text-purple-700 mb-4">Recent Attendance</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-2">Course</th>
-                <th className="text-left py-2">Status</th>
-                <th className="text-left py-2">Date</th>
-                <th className="text-left py-2">Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentAttendance.map((record, index) => (
-                <tr key={index} className="border-b">
-                  <td className="py-2">{record.courseId?.code}</td>
-                  <td className="py-2">
-                    <span className={`px-2 py-1 rounded text-sm ${
-                      record.status === 'present'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {record.status == 'present' ? 'Present' : 'Absant'}
-                    </span>
-                  </td>
-                  <td className="py-2">{record.date}</td>
-                  <td className="py-2">{record.time}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          <div className="aum-card" style={{marginBottom:16}}>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+              <div style={{fontWeight:800,color:'var(--foc-navy)'}}>Attendance Progress</div>
+              <div style={{fontSize:13,color:'var(--foc-muted)'}}>{attendancePercent}%</div>
+            </div>
+            <div style={{height:12,background:'#eef2ff',borderRadius:8,overflow:'hidden'}}>
+              <div style={{width:`${attendancePercent}%`,height:'100%',background:'linear-gradient(90deg,var(--foc-gold), rgba(255,209,0,0.8))'}} />
+            </div>
+            <div className="muted" style={{marginTop:10,fontSize:13}}>Keep attending to maintain your score.</div>
+          </div>
 
-      {/* Quick Actions */}
-      <div className="bg-white p-6 shadow-md rounded">
-        <h2 className="text-xl font-bold text-purple-700 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link
-            to="/view-attendance"
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition text-center"
-          >
-            View Full Report
-          </Link>
-          <Link
-            to="/student-notifications"
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition text-center"
-          >
-            Check Notifications
-          </Link>
-          <Link
-            to="/student-profile"
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition text-center"
-          >
-            Update Profile
-          </Link>
+          <div className="aum-card">
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+              <div style={{fontWeight:800,color:'var(--foc-navy)'}}>Recent Attendance</div>
+              <div className="aum-badge">Latest</div>
+            </div>
+            <div style={{overflowX:'auto'}}>
+              <table className="w-full" style={{borderCollapse:'collapse'}}>
+                <thead>
+                  <tr style={{borderBottom:'1px solid rgba(2,17,50,0.06)'}}>
+                    <th className="muted" style={{textAlign:'left',padding:'10px 8px'}}>Course</th>
+                    <th className="muted" style={{textAlign:'left',padding:'10px 8px'}}>Status</th>
+                    <th className="muted" style={{textAlign:'left',padding:'10px 8px'}}>Date</th>
+                    <th className="muted" style={{textAlign:'left',padding:'10px 8px'}}>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentAttendance && recentAttendance.length ? recentAttendance.slice(0,8).map((r, idx) => (
+                    <tr key={idx} style={{borderBottom:'1px solid rgba(2,17,50,0.04)'}}>
+                      <td style={{padding:'10px 8px'}}>{r.courseId?.code ?? r.course}</td>
+                      <td style={{padding:'10px 8px'}}>
+                        <span style={{padding:'6px 10px',borderRadius:999,background: r.status === 'present' ? '#ecfdf5' : '#fff1f2',color: r.status === 'present' ? '#059669' : '#dc2626',fontWeight:700,fontSize:13}}>
+                          {r.status === 'present' ? 'Present' : 'Absent'}
+                        </span>
+                      </td>
+                      <td style={{padding:'10px 8px'}}>{r.date}</td>
+                      <td style={{padding:'10px 8px'}}>{r.time}</td>
+                    </tr>
+                  )) : (
+                    <tr>
+                      <td colSpan={4} className="aum-empty">No recent attendance available.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+
+        {/* Right sidebar */}
+        <aside>
+          <div className="aum-card" style={{textAlign:'center'}}>
+            <img src={studentInfo.avatar || '/user.jpg'} alt="avatar" className="profile-avatar" style={{width:96,height:96,margin:'0 auto 10px'}} />
+              <div style={{fontWeight:800,color:'var(--foc-navy)',fontSize:16}}>{studentInfo.name || 'Student'}</div>
+              <div className="muted" style={{marginBottom:12}}>{studentInfo.dept || ''}</div>
+            <div style={{display:'flex',gap:8,justifyContent:'center'}}>
+              <div style={{textAlign:'center'}}>
+                <div style={{fontWeight:800,color:'var(--foc-navy)'}}>{attendancePercent}%</div>
+                <div className="muted" style={{fontSize:12}}>Attendance</div>
+              </div>
+              <div style={{textAlign:'center'}}>
+                <div style={{fontWeight:800,color:'var(--foc-navy)'}}>{studentInfo.courses || '-'}</div>
+                <div className="muted" style={{fontSize:12}}>Courses</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="aum-card" style={{marginTop:12}}>
+            <div style={{fontWeight:800,color:'var(--foc-navy)',marginBottom:8}}>Quick Actions</div>
+            <div style={{display:'flex',flexDirection:'column',gap:8}}>
+              <Link to="/view-attendance" className="aum-btn-primary" style={{justifyContent:'center'}}>View Report</Link>
+              <Link to="/student-notifications" className="aum-btn-primary" style={{justifyContent:'center'}}>Notifications</Link>
+              <Link to="/student-profile" className="aum-btn-ghost" style={{justifyContent:'center'}}>Edit Profile</Link>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
