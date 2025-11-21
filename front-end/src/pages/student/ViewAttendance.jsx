@@ -87,35 +87,35 @@ const ViewAttendance = () => {
     setSelectedCourse(null);
   };
 
-  const getStatusColor = (status) => {
+  const getStatusStyle = (status) => {
     switch (status) {
       case "Good":
-        return "text-green-600 bg-green-100";
+        return { color: '#065f46', background: '#ecfdf5' };
       case "Average":
-        return "text-yellow-600 bg-yellow-100";
+        return { color: '#92400e', background: '#fffbeb' };
       case "Low":
-        return "text-red-600 bg-red-100";
+        return { color: '#991b1b', background: '#fff1f2' };
       default:
-        return "text-gray-600 bg-gray-100";
+        return { color: 'var(--foc-muted)', background: 'rgba(2,17,50,0.02)' };
     }
   };
 
-  const getAttendanceColor = (percentage) => {
-    if (percentage >= 85) return "text-green-600";
-    if (percentage >= 75) return "text-yellow-600";
-    return "text-red-600";
+  const getAttendanceStyle = (percentage) => {
+    if (percentage >= 85) return { color: '#059669' };
+    if (percentage >= 75) return { color: '#b45309' };
+    return { color: '#dc2626' };
   };
 
-  const getRecordStatusColor = (status) => {
+  const getRecordStatusStyle = (status) => {
     switch (status) {
       case "Present":
-        return "text-green-600 bg-green-50";
+        return { color: '#059669', background: '#ecfdf5' };
       case "Late":
-        return "text-yellow-600 bg-yellow-50";
+        return { color: '#92400e', background: '#fffbeb' };
       case "Absent":
-        return "text-red-600 bg-red-50";
+        return { color: '#dc2626', background: '#fff1f2' };
       default:
-        return "text-gray-600 bg-gray-50";
+        return { color: 'var(--foc-muted)', background: 'rgba(2,17,50,0.02)' };
     }
   };
 
@@ -129,54 +129,49 @@ const ViewAttendance = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-purple-700 flex items-center">
-          <i className="fas fa-calendar-check mr-2"></i>
-          View Attendance
-        </h1>
-        <div className="flex items-center gap-3">
-          <img
-            src="/user.jpg"
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-          <span className="font-medium">Student</span>
+    <div className="aum-container">
+      <div className="aum-header">
+        <div>
+          <div className="aum-title">View Attendance</div>
+          <div className="aum-sub">Your class attendance overview</div>
+        </div>
+        <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <img src="/user.jpg" alt="Profile" className="profile-avatar" style={{width:40,height:40}} />
+          <div className="muted" style={{fontWeight:600}}>Student</div>
         </div>
       </div>
 
       {/* Date Range Filter */}
-      <div className="bg-white p-6 shadow-md rounded mb-6">
-        <h3 className="text-xl font-semibold text-purple-700 mb-4 flex items-center">
-          <i className="fas fa-calendar-alt mr-2"></i>
-          Select Date Range
-        </h3>
+      <div className="aum-card mb-6">
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+          <div style={{fontWeight:700,color:'var(--foc-navy)'}}>Select Date Range</div>
+          <div className="aum-badge">Filter</div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
           <div>
-            <label className="block mb-2 font-medium text-gray-700">From Date</label>
+            <div className="aum-label">From Date</div>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="aum-input"
             />
           </div>
           <div>
-            <label className="block mb-2 font-medium text-gray-700">To Date</label>
+            <div className="aum-label">To Date</div>
             <input
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="aum-input"
             />
           </div>
           <div>
             <button
               onClick={applyFilter}
-              className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700 transition"
+              className="aum-btn-primary"
+              style={{width:'100%'}}
             >
-              <i className="fas fa-filter mr-2"></i>
               Apply Filter
             </button>
           </div>
@@ -186,8 +181,8 @@ const ViewAttendance = () => {
       {/* Loading Spinner */}
       {loading && (
         <div className="text-center py-8">
-          <i className="fas fa-spinner fa-spin text-2xl text-purple-600"></i>
-          <p className="mt-2 text-gray-600">Loading attendance data...</p>
+          <i className="fas fa-spinner fa-spin text-2xl" style={{color:'var(--foc-navy)'}}></i>
+          <p className="mt-2 muted">Loading attendance data...</p>
         </div>
       )}
 
@@ -203,40 +198,40 @@ const ViewAttendance = () => {
       {!loading && !error && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           {filteredData.map(course => (
-            <div key={course.id} className="bg-white p-6 shadow-md rounded hover:shadow-lg transition">
-              <div className="flex justify-between items-start mb-4">
+            <div key={course.id} className="aum-card">
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:10}}>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">{course.name}</h3>
-                  <p className="text-sm text-gray-600">{course.instructor}</p>
-                  <p className="text-xs text-gray-500">Course ID: {course.id}</p>
+                  <h3 className="aum-list-title">{course.name}</h3>
+                  <div className="muted" style={{fontSize:13}}>{course.instructor}</div>
+                  <div className="muted" style={{fontSize:12}}>Course ID: {course.id}</div>
                 </div>
-                <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(course.status)}`}>
+                <span style={{padding:'6px 8px',borderRadius:8,fontSize:12,fontWeight:700,...getStatusStyle(course.status)}}>
                   {course.status}
                 </span>
               </div>
 
               <div className="space-y-3 mb-4">
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Attendance:</span>
-                  <span className={`font-semibold ${getAttendanceColor(course.attendancePercentage)}`}>
+                <div style={{display:'flex',justifyContent:'space-between'}}>
+                  <span className="muted" style={{fontSize:13}}>Attendance:</span>
+                  <span style={{fontWeight:700,...getAttendanceStyle(course.attendancePercentage)}}>
                     {course.attendancePercentage}%
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Classes Attended:</span>
-                  <span className="font-semibold">{course.attendedClasses}/{course.totalClasses}</span>
+                <div style={{display:'flex',justifyContent:'space-between'}}>
+                  <span className="muted" style={{fontSize:13}}>Classes Attended:</span>
+                  <span style={{fontWeight:700}}>{course.attendedClasses}/{course.totalClasses}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Last Attendance:</span>
-                  <span className="text-sm">{course.lastAttendance}</span>
+                <div style={{display:'flex',justifyContent:'space-between'}}>
+                  <span className="muted" style={{fontSize:13}}>Last Attendance:</span>
+                  <span className="muted" style={{fontSize:13}}>{course.lastAttendance}</span>
                 </div>
               </div>
 
               <button
                 onClick={() => viewCourseDetails(course)}
-                className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition"
+                className="aum-btn-primary"
+                style={{width:'100%'}}
               >
-                <i className="fas fa-eye mr-2"></i>
                 View Details
               </button>
             </div>
