@@ -35,7 +35,7 @@ function ProfessorSidebar() {
           </span>
           <span className="font-medium">Profile</span>
         </Link>
-        <Link to="/professor/student-notifications" className="sidebar-item flex items-center gap-3 p-3 rounded-lg hover:bg-purple-50 transition-colors duration-200 hover:shadow-sm text-gray-700 hover:text-purple-700">
+        <Link to="/professor-notifications" className="sidebar-item flex items-center gap-3 p-3 rounded-lg hover:bg-purple-50 transition-colors duration-200 hover:shadow-sm text-gray-700 hover:text-purple-700">
           <span className="sidebar-icon transition-transform duration-200">
             <i data-feather="bell" className="w-5 h-5"></i>
           </span>
