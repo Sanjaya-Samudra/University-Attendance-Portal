@@ -1,7 +1,9 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { AppContext } from "../../context/AppContext";
 import { toast } from "react-toastify";
+import CustomSelect from '../../components/CustomSelect'
+import '../../styles/admin-user-management.css'
 
 const ProfessorProfile = () => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -21,6 +23,21 @@ const ProfessorProfile = () => {
     researchInterests: "",
   });
   const {backendUrl} = useContext(AppContext)
+
+  const fileInputRef = useRef(null)
+  const [photoFile, setPhotoFile] = useState(null)
+  const [photoPreview, setPhotoPreview] = useState(null)
+
+  const handlePhotoSelect = (e) => {
+    const f = e.target.files && e.target.files[0]
+    if (!f) return
+    setPhotoFile(f)
+    setPhotoPreview(URL.createObjectURL(f))
+  }
+
+  const handleChangePhotoClick = () => {
+    if (fileInputRef.current) fileInputRef.current.click()
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,12 +82,7 @@ const ProfessorProfile = () => {
     
   };
 
-  const handleLogout = () => {
-    if (window.confirm("Are you sure you want to logout?")) {
-      // Handle logout
-      alert("Logged out successfully!");
-    }
-  };
+  
 
   const getProData = async () => {
     try {
@@ -117,81 +129,75 @@ const ProfessorProfile = () => {
   }, [])
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-purple-700">Professor Profile Management</h1>
-        <div className="flex items-center gap-3">
-          <img
-            src="/user.jpg"
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-          <span className="font-medium">Professor</span>
+    <div className="aum-container">
+      <div className="aum-header">
+        <div>
+          <div className="aum-title">Professor Profile</div>
+          <div className="aum-sub">Keep your profile up to date for students</div>
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex gap-4 mb-6">
-        <button
-          onClick={() => setIsEditMode(!isEditMode)}
-          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
-        >
-          <i className="fas fa-edit mr-2"></i>
-          {isEditMode ? "Cancel Edit" : "Edit Profile"}
-        </button>
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-        >
-          <i className="fas fa-sign-out-alt mr-2"></i>
-          Logout
-        </button>
-      </div>
-
-      {/* Profile Form */}
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
-        {/* Photo Section */}
-        <div className="flex items-center gap-6 mb-8">
-          <div className="relative">
-            <img
-              src="https://via.placeholder.com/150"
-              alt="Professor Photo"
-              className="w-32 h-32 rounded-full object-cover border-4 border-purple-200"
-            />
-            {isEditMode && (
+      <div style={{display:'flex', flexDirection:'column', gap:20, maxWidth:900, margin:'0 auto'}}>
+        <aside className="profile-card" style={{width:'100%'}}>
+          <div style={{display:'flex', justifyContent:'flex-end'}}>
+            <div>
               <button
                 type="button"
-                className="absolute bottom-0 right-0 bg-purple-600 text-white p-2 rounded-full hover:bg-purple-700 transition"
+                onClick={() => setIsEditMode(!isEditMode)}
+                className="aum-btn-primary"
+                style={{padding:'6px 10px', fontSize:14}}
               >
-                <i className="fas fa-camera"></i>
+                {isEditMode ? 'Viewing' : 'Edit'}
               </button>
-            )}
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">{profileData.professorName}</h2>
-            <p className="text-purple-600">{profileData.designation}</p>
-            <p className="text-gray-600">{profileData.department.replace("-", " ").toUpperCase()}</p>
-          </div>
-        </div>
-
-        {/* Basic Information */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-purple-700 mb-4 flex items-center">
-            <i className="fas fa-user mr-2"></i>
-            Basic Information
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block mb-1 font-medium">Professor ID</label>
-              <input
-                type="text"
-                name="professorId"
-                value={profileData.professorId}
-                className="w-full border px-3 py-2 rounded bg-gray-100"
-                readOnly
-              />
             </div>
+          </div>
+
+          <div style={{display:'flex', gap:16, alignItems:'center', marginTop:8}}>
+            <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+              <img
+                src={photoPreview || profileData.photoUrl || '/user.jpg'}
+                alt="Professor Photo"
+                style={{width:96, height:96, borderRadius:999, objectFit:'cover', border:'3px solid var(--foc-navy)'}}
+              />
+              {isEditMode ? (
+                <div style={{marginTop:10, display:'flex', gap:8}}>
+                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoSelect} style={{display:'none'}} />
+                  <button type="button" onClick={handleChangePhotoClick} className="aum-btn-primary">Change</button>
+                  <button type="button" onClick={() => { setPhotoFile(null); setPhotoPreview(null) }} className="aum-btn-ghost">Reset</button>
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <div className="profile-name">{profileData.professorName}</div>
+              <div className="profile-role">{profileData.designation}</div>
+              <div className="profile-dept">{profileData.department ? profileData.department.replace("-", " ").toUpperCase() : ''}</div>
+              <div className="profile-stats">
+                <div className="profile-stat"><div className="value">{profileData.dateOfJoin || '-'}</div><div className="muted">Joined</div></div>
+                <div className="profile-stat"><div className="value">{profileData.officeHours || '-'}</div><div className="muted">Office Hours</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{marginTop:16}}>
+            <div className="section-title"><span className="icon">📬</span><span className="text">Contact</span></div>
+            <div className="muted">{profileData.email}</div>
+            <div className="muted">{profileData.phoneNumber}</div>
+          </div>
+        </aside>
+
+        <main>
+          {/* Profile Form */}
+          <form onSubmit={handleSubmit} className="aum-card">
+            {/* Basic Information */}
+            <div className="mb-6">
+              <div className="section-title"><span className="icon">👤</span><span className="text">Basic Information</span></div>
+              <div className="gold-underline" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{marginTop:12}}>
+                <div>
+                  <label className="block mb-1 font-medium">Professor ID</label>
+                  <input type="text" name="professorId" value={profileData.professorId} className="aum-input" readOnly />
+                </div>
 
             <div>
               <label className="block mb-1 font-medium">Full Name *</label>
@@ -201,7 +207,7 @@ const ProfessorProfile = () => {
                 value={profileData.professorName}
                 onChange={handleChange}
                 disabled={!isEditMode}
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
                 required
               />
             </div>
@@ -213,7 +219,7 @@ const ProfessorProfile = () => {
                   type="text"
                   name="nic"
                   value={profileData.nic}
-                  className="flex-1 border px-3 py-2 rounded bg-gray-100"
+                  className="aum-input"
                   readOnly
                 />
                 <button
@@ -233,7 +239,7 @@ const ProfessorProfile = () => {
                 value={profileData.email}
                 onChange={handleChange}
                 disabled={!isEditMode}
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
                 required
               />
             </div>
@@ -246,7 +252,7 @@ const ProfessorProfile = () => {
                 value={profileData.phoneNumber}
                 onChange={handleChange}
                 disabled={!isEditMode}
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
                 required
               />
             </div>
@@ -254,35 +260,26 @@ const ProfessorProfile = () => {
             <div>
               <label className="block mb-1 font-medium">Department</label>
               <div className="flex gap-2">
-                <select
+                <CustomSelect
                   name="department"
                   value={profileData.department}
-                  disabled={!isEditMode}
                   onChange={handleChange}
-                  className="flex-1 border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
-                >
-                  <option value="">Select Department</option>
-                </select>
-                <button
-                  type="button"
-                  className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 transition"
-                >
-                  Request Change
-                </button>
+                  options={[]}
+                  placeholder="Select Department"
+                />
+                <button type="button" className="aum-btn-ghost" style={{alignSelf:'center'}}>Request Change</button>
               </div>
             </div>
 
             <div>
               <label className="block mb-1 font-medium">Designation</label>
-              <select
+              <CustomSelect
                 name="designation"
                 value={profileData.designation}
-                disabled={!isEditMode}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
-              >
-                <option value="">Select Designation</option>
-              </select>
+                options={[]}
+                placeholder="Select Designation"
+              />
             </div>
 
             <div>
@@ -293,19 +290,17 @@ const ProfessorProfile = () => {
                 value={profileData.dateOfJoin}
                 onChange={handleChange}
                 disabled={!isEditMode}
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
               />
             </div>
           </div>
         </div>
 
         {/* Additional Information */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-purple-700 mb-4 flex items-center">
-            <i className="fas fa-info-circle mr-2"></i>
-            Additional Information
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="mb-6">
+              <div className="section-title"><span className="icon">ℹ️</span><span className="text">Additional Information</span></div>
+              <div className="gold-underline" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{marginTop:12}}>
             <div className="md:col-span-2">
               <label className="block mb-1 font-medium">Address</label>
               <textarea
@@ -314,7 +309,7 @@ const ProfessorProfile = () => {
                 onChange={handleChange}
                 disabled={!isEditMode}
                 rows="3"
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
               />
             </div>
 
@@ -326,7 +321,7 @@ const ProfessorProfile = () => {
                 onChange={handleChange}
                 disabled={!isEditMode}
                 rows="2"
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
               />
             </div>
 
@@ -338,7 +333,7 @@ const ProfessorProfile = () => {
                 value={profileData.specialization}
                 onChange={handleChange}
                 disabled={!isEditMode}
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
               />
             </div>
 
@@ -350,7 +345,7 @@ const ProfessorProfile = () => {
                 value={profileData.officeHours}
                 onChange={handleChange}
                 disabled={!isEditMode}
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
               />
             </div>
 
@@ -362,7 +357,7 @@ const ProfessorProfile = () => {
                 onChange={handleChange}
                 disabled={!isEditMode}
                 rows="2"
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
+                className="aum-input"
               />
             </div>
           </div>
@@ -370,24 +365,15 @@ const ProfessorProfile = () => {
 
         {/* Submit Button */}
         {isEditMode && (
-          <div className="flex gap-4">
-            <button
-              type="submit"
-              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
-            >
-              Save Changes
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsEditMode(false)}
-              className="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700 transition"
-            >
-              Cancel
-            </button>
+          <div style={{display:'flex', gap:12}}>
+            <button type="submit" className="aum-btn-primary">Save Changes</button>
+            <button type="button" onClick={() => setIsEditMode(false)} className="aum-btn-ghost">Cancel</button>
           </div>
         )}
       </form>
-    </div>
+    </main>
+  </div>
+</div>
   );
 };
 

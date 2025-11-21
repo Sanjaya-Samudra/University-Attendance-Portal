@@ -48,3 +48,19 @@
 
 /* small helpers */
 .muted{ color:var(--foc-muted) }
+
+/* Profile layout enhancements */
+.profile-layout{ display:grid; grid-template-columns: 320px 1fr; gap:28px }
+@media(max-width:920px){ .profile-layout{ grid-template-columns: 1fr; } }
+.profile-card{ padding:20px; border-radius:12px; background:linear-gradient(180deg,#fff,#fbfdff); box-shadow:0 12px 30px rgba(2,17,71,0.04); border:1px solid rgba(2,17,50,0.04) }
+.profile-avatar{ width:120px; height:120px; border-radius:999px; object-fit:cover; border:4px solid var(--foc-navy) }
+.profile-name{ font-size:1.25rem; font-weight:800; color:var(--foc-navy); margin-top:8px }
+.profile-role{ color:var(--foc-gold); font-weight:600 }
+.profile-dept{ color:var(--foc-muted); margin-top:4px }
+.profile-stats{ display:flex; gap:12px; margin-top:14px }
+.profile-stat{ flex:1; background:linear-gradient(180deg, rgba(0,33,71,0.02), #fff); padding:10px; border-radius:10px; text-align:center }
+.profile-stat .value{ font-weight:700; color:var(--foc-navy); font-size:1.1rem }
+.section-title{ display:flex; align-items:center; gap:10px; margin-bottom:12px }
+.section-title .icon{ font-size:1.05rem; color:var(--foc-navy) }
+.section-title .text{ font-weight:700; color:var(--foc-navy) }
+.gold-underline{ height:4px; width:64px; background:linear-gradient(90deg,var(--foc-gold), rgba(255,209,0,0.6)); border-radius:4px; margin-top:8px }
